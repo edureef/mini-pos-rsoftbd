@@ -3,7 +3,8 @@ import Layout from "./components/Layout";
 import BrandModal from "./components/modals/BrandModal";
 import DeleteModal from "./components/modals/DeleteModal";
 
-const Brand = () => {
+const Brand = ({ brands }) => {
+
     const handleDeleteBtn = () => {
         console.log("true");
     }
@@ -30,16 +31,46 @@ const Brand = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>12</td>
-                                    <td>Pran</td>
-                                    <td>
-                                        <BrandModal edit={'1'} />
-                                        <DeleteModal handleDeleteBtn={handleDeleteBtn} />
-                                    </td>
-                                </tr>
+                                {
+                                    brands.data.map((brand, index) => (
+                                        <tr key={brand.id}>
+                                            <td>{index + 1}</td>
+                                            <td>{brand.name}</td>
+                                            <td>
+                                                <BrandModal edit={'1'} />
+                                                <DeleteModal handleDeleteBtn={handleDeleteBtn} />
+                                            </td>
+                                        </tr>
+                                    ))
+                                }
                             </tbody>
                         </table>
+
+                        <div className="py-4">
+                            <nav>
+                                <ul className="pagination justify-content-center">
+                                    {brands.links.map(link => (
+                                        <li key={link.label} className={`page-item ${link.active ? 'active' : ''} ${!link.url ? 'disabled' : ''}`}>
+                                            {link.url ? (
+                                                <Link
+                                                    className="page-link"
+                                                    href={link.url}
+                                                    dangerouslySetInnerHTML={{ __html: link.label }}
+                                                />
+                                            ) : (
+                                                <span
+                                                    className="page-link"
+                                                    dangerouslySetInnerHTML={{ __html: link.label }}
+                                                />
+                                            )}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </nav>
+                        </div>
+
+
+
                     </div>
                 </div>
             </div>

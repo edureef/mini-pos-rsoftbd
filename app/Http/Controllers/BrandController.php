@@ -14,7 +14,8 @@ class BrandController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Brand');
+        $brands = Brand::latest()->paginate(10);
+        return Inertia::render('Brand', compact('brands'));
     }
 
     /**
