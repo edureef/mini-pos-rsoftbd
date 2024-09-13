@@ -1,12 +1,20 @@
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import Layout from "./components/Layout";
 import BrandModal from "./components/modals/BrandModal";
 import DeleteModal from "./components/modals/DeleteModal";
+import { useState } from "react";
 
 const Brand = ({ brands }) => {
+    const [selectedBrandName, setSelectedBrandName] = useState(null);
+    const [selectedBrandId, setSelectedBrandId] = useState(null);
 
     const handleDeleteBtn = () => {
-        console.log("true");
+        router.delete(`brand/${selectedBrandId}`)
+    }
+
+    const openDeleteModal = (brand) => {
+        setSelectedBrandName(brand.name)
+        setSelectedBrandId(brand.id)
     }
 
     return <>
@@ -38,7 +46,7 @@ const Brand = ({ brands }) => {
                                             <td>{brand.name}</td>
                                             <td>
                                                 <BrandModal edit={'1'} />
-                                                <DeleteModal handleDeleteBtn={handleDeleteBtn} />
+                                                <DeleteModal openDeleteModal={() => openDeleteModal(brand)} dataName={selectedBrandName} handleDeleteBtn={handleDeleteBtn} />
                                             </td>
                                         </tr>
                                     ))
@@ -68,8 +76,6 @@ const Brand = ({ brands }) => {
                                 </ul>
                             </nav>
                         </div>
-
-
 
                     </div>
                 </div>
