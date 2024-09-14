@@ -1,12 +1,18 @@
 import { useForm } from '@inertiajs/react';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 
-const BrandModal = ({ edit }) => {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
+const BrandModal = ({ isEdit, editData, openEditModal }) => {
+    const { data, setData, post, put, processing, errors, reset } = useForm({
+        name: editData?.name || ''
     });
 
     const modalRef = useRef(null); // Ref for modal
+
+    useEffect(() => {
+        if (isEdit && editData) {
+            setData({ name: editData.name });
+        }
+    }, [isEdit, editData]);
 
     const handleAddBrand = (e) => {
         e.preventDefault();
@@ -20,6 +26,12 @@ const BrandModal = ({ edit }) => {
 
     const handleUpdateBrand = (e) => {
         e.preventDefault();
+        put(`brand/${editData.id}`, {
+            onSuccess: () => {
+                reset();
+                closeModal(); // Close the modal after successful update
+            },
+        });
     };
 
     const closeModal = () => {
@@ -34,18 +46,30 @@ const BrandModal = ({ edit }) => {
 
     return (
         <>
-            <button
-                type="button"
-                className={`btn btn-sm btn-${edit ? 'success' : 'primary'} btn-rounded`}
-                data-bs-toggle="modal"
-                data-bs-target={edit ? '#staticBackdropUpdate' : '#staticBackdropCreate'}
-            >
-                {edit ? <i className="fa fa-edit"></i> : 'Add Brand'}
-            </button>
+            {isEdit ? (
+                <button
+                    onClick={openEditModal}
+                    type="button"
+                    className="btn btn-sm btn-success btn-rounded"
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdropUpdate"
+                >
+                    <i className="fa fa-edit"></i>
+                </button>
+            ) : (
+                <button
+                    type="button"
+                    className="btn btn-sm btn-primary btn-rounded"
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdropCreate"
+                >
+                    Add Brand
+                </button>
+            )}
 
             <div
                 className="modal fade"
-                id={edit ? 'staticBackdropUpdate' : 'staticBackdropCreate'}
+                id={isEdit ? 'staticBackdropUpdate' : 'staticBackdropCreate'}
                 data-bs-backdrop="static"
                 data-bs-keyboard="false"
                 tabIndex="-1"
@@ -56,25 +80,49 @@ const BrandModal = ({ edit }) => {
                 <div className="modal-dialog">
                     <div className="modal-content text-start">
                         <div className="modal-header">
-                            <h6 className="modal-title" id="staticBackdropLabel">{edit ? 'Update' : 'Create'} Brand</h6>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <h6 className="modal-title" id="staticBackdropLabel">
+                                {isEdit ? 'Update' : 'Create'} Brand
+                            </h6>
+                            <button
+                                type="button"
+                                className="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            ></button>
                         </div>
-                        <form onSubmit={edit ? handleUpdateBrand : handleAddBrand} method="POST">
+                        <form
+                            onSubmit={isEdit ? handleUpdateBrand : handleAddBrand}
+                            method="POST"
+                        >
                             <div className="modal-body">
                                 <div className="input-group input-group-sm mb-3">
-                                    <label htmlFor="brand-name" className="input-group-text">Brand Name:</label>
+                                    <label
+                                        htmlFor="brand-name"
+                                        className="input-group-text"
+                                    >
+                                        Brand Name:
+                                    </label>
                                     <input
                                         type="text"
-                                        className={`form-control form-control-sm ${errors.name && 'is-invalid'}`}
+                                        className={`form-control form-control-sm ${errors.name && 'is-invalid'
+                                            }`}
                                         id="brand-name"
                                         value={data.name || ''}
-                                        onChange={(e) => setData('name', e.target.value)}
+                                        onChange={(e) =>
+                                            setData('name', e.target.value)
+                                        }
                                     />
                                 </div>
-                                {errors.name && <p className="text-danger">{errors.name}</p>}
+                                {errors.name && (
+                                    <p className="text-danger">{errors.name}</p>
+                                )}
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-sm btn-secondary" data-bs-dismiss="modal">
+                                <button
+                                    type="button"
+                                    className="btn btn-sm btn-secondary"
+                                    data-bs-dismiss="modal"
+                                >
                                     Close
                                 </button>
                                 <button
@@ -82,7 +130,7 @@ const BrandModal = ({ edit }) => {
                                     className="btn btn-sm btn-primary"
                                     disabled={processing}
                                 >
-                                    {edit ? 'Update' : 'Save'}
+                                    {isEdit ? 'Update' : 'Save'}
                                 </button>
                             </div>
                         </form>

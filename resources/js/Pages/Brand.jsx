@@ -7,6 +7,7 @@ import { useState } from "react";
 const Brand = ({ brands }) => {
     const [selectedBrandName, setSelectedBrandName] = useState(null);
     const [selectedBrandId, setSelectedBrandId] = useState(null);
+    const [editData, setEditData] = useState(null);
 
     const handleDeleteBtn = () => {
         router.delete(`brand/${selectedBrandId}`)
@@ -16,6 +17,10 @@ const Brand = ({ brands }) => {
         setSelectedBrandName(brand.name)
         setSelectedBrandId(brand.id)
     }
+
+    const openEditModal = (brand) => {
+        setEditData(brand)
+    };
 
     return <>
         <Layout>
@@ -45,7 +50,7 @@ const Brand = ({ brands }) => {
                                             <td>{index + 1}</td>
                                             <td>{brand.name}</td>
                                             <td>
-                                                <BrandModal edit={'1'} />
+                                                <BrandModal openEditModal={() => openEditModal(brand)} isEdit={brand} editData={editData} />
                                                 <DeleteModal openDeleteModal={() => openDeleteModal(brand)} dataName={selectedBrandName} handleDeleteBtn={handleDeleteBtn} />
                                             </td>
                                         </tr>

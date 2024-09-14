@@ -61,7 +61,11 @@ class BrandController extends Controller
      */
     public function update(Request $request, Brand $brand)
     {
-        //
+        $validtae = $request->validate([
+            'name' => ['required', 'max:50'],
+        ]);
+        $brand->update($validtae);
+        return redirect()->back();
     }
 
     /**
