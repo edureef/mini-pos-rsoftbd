@@ -1,4 +1,4 @@
-import { Link, router } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import Layout from "./components/Layout";
 import BrandModal from "./components/modals/BrandModal";
 import DeleteModal from "./components/modals/DeleteModal";
@@ -23,6 +23,9 @@ const Brand = ({ brands }) => {
     };
 
     return <>
+        <Head>
+            <title>Brand</title>
+        </Head>
         <Layout>
             <div className="card mb-3">
                 <div className="card-body">

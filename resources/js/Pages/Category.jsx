@@ -1,8 +1,9 @@
-import { Link } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import Layout from "./components/Layout";
 
 const Category = () => {
     return <>
+        <Head title="Category" />
         <Layout>
             <div className="card">
                 <div className="card-body">

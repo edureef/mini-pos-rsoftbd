@@ -1,8 +1,10 @@
+import { Head } from "@inertiajs/react";
 import Layout from "./components/Layout";
 
 function Dashbord() {
     return (
         <>
+        <Head title="Dashbord"/>
             <Layout>
                 <div className="card">
                     <div className="card-body">
