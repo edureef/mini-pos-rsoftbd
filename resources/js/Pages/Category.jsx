@@ -1,9 +1,19 @@
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import Layout from "./components/Layout";
 import { CategoryModal } from "./components/modals/CategoryModal";
 import DeleteModal from "./components/modals/DeleteModal";
+import { useState } from "react";
 
-const Category = () => {
+const Category = ({ categories }) => {
+    const [categoryData, setCategoryData] = useState([]);
+
+    const handleDeleteBtn = () => {
+        router.delete(`category/${categoryData.id}`);
+    };
+
+    const openDeleteModal = (category) => {
+        setCategoryData(category);
+    };
     return (
         <>
             <Head title="Category" />
@@ -29,36 +39,63 @@ const Category = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>12</td>
-                                        <td>test</td>
-                                        <td>
-                                            <CategoryModal isEdit={1} />
-                                            <DeleteModal />
-                                        </td>
-                                    </tr>
+                                    {categories.data.map((category, index) => {
+                                        return (
+                                            <tr key={category.id}>
+                                                <td>{index + 1}</td>
+                                                <td>{category.name}</td>
+                                                <td>
+                                                    <CategoryModal isEdit={1} />
+                                                    <DeleteModal
+                                                        openDeleteModal={() =>
+                                                            openDeleteModal(
+                                                                category
+                                                            )
+                                                        }
+                                                        dataName={
+                                                            categoryData.name
+                                                        }
+                                                        handleDeleteBtn={
+                                                            handleDeleteBtn
+                                                        }
+                                                    />
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
                                 </tbody>
                             </table>
 
                             <div className="py-4">
                                 <nav>
                                     <ul className="pagination justify-content-center">
-                                        {/* {brands.links.map(link => (
-                                        <li key={link.label} className={`page-item ${link.active ? 'active' : ''} ${!link.url ? 'disabled' : ''}`}>
-                                            {link.url ? (
-                                                <Link
-                                                    className="page-link"
-                                                    href={link.url}
-                                                    dangerouslySetInnerHTML={{ __html: link.label }}
-                                                />
-                                            ) : (
-                                                <span
-                                                    className="page-link"
-                                                    dangerouslySetInnerHTML={{ __html: link.label }}
-                                                />
-                                            )}
-                                        </li>
-                                    ))} */}
+                                        {categories.links.map((link) => (
+                                            <li
+                                                key={link.label}
+                                                className={`page-item ${
+                                                    link.active ? "active" : ""
+                                                } ${
+                                                    !link.url ? "disabled" : ""
+                                                }`}
+                                            >
+                                                {link.url ? (
+                                                    <Link
+                                                        className="page-link"
+                                                        href={link.url}
+                                                        dangerouslySetInnerHTML={{
+                                                            __html: link.label,
+                                                        }}
+                                                    />
+                                                ) : (
+                                                    <span
+                                                        className="page-link"
+                                                        dangerouslySetInnerHTML={{
+                                                            __html: link.label,
+                                                        }}
+                                                    />
+                                                )}
+                                            </li>
+                                        ))}
                                     </ul>
                                 </nav>
                             </div>

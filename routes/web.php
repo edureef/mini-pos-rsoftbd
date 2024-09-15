@@ -1,13 +1,14 @@
 <?php
 
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return inertia('Dashbord');
 });
-Route::get('/category', function () {
-    return inertia('Category');
-});
+Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
+Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
+Route::delete('/category/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
 
 Route::resource('/brand', BrandController::class);

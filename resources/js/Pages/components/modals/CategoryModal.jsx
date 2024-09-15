@@ -1,11 +1,23 @@
+import { useForm } from "@inertiajs/react";
 import React, { useRef } from "react";
 
 export const CategoryModal = ({ isEdit }) => {
     const closeRef = useRef(null);
+    const { data, setData, post, errors, processing, reset } = useForm({
+        name: "",
+    });
 
-    const handleAddCetagory = () => {
-        closeRef.current.click();
+    const handleAddCetagory = (e) => {
+        e.preventDefault();
+        post("/category", {
+            onSuccess: () => {
+                reset();
+                closeRef.current.click();
+            },
+        });
     };
+
+    const handleUpdateCetagory = () => {};
 
     return (
         <>
@@ -52,33 +64,52 @@ export const CategoryModal = ({ isEdit }) => {
                                 aria-label="Close"
                             ></button>
                         </div>
-                        <div className="modal-body">
-                            <div className="input-group input-group-sm">
-                                <span className="input-group-text">
-                                    Category Name
-                                </span>
-                                <input
-                                    type="text"
-                                    className="form-control form-control-sm"
-                                />
+                        <form
+                            onSubmit={
+                                isEdit
+                                    ? handleUpdateCetagory
+                                    : handleAddCetagory
+                            }
+                            method="post"
+                        >
+                            <div className="modal-body">
+                                <div className="input-group input-group-sm mb-3">
+                                    <span className="input-group-text">
+                                        Category Name
+                                    </span>
+                                    <input
+                                        type="text"
+                                        className={`form-control form-control-sm ${
+                                            errors.name && "is-invalid"
+                                        }`}
+                                        value={data.name || ""}
+                                        onChange={(e) =>
+                                            setData("name", e.target.value)
+                                        }
+                                    />
+                                </div>
+                                {errors.name && (
+                                    <p className="text-danger">{errors.name}</p>
+                                )}
                             </div>
-                        </div>
-                        <div className="modal-footer">
-                            <button
-                                type="button"
-                                className="btn btn-sm btn-secondary"
-                                data-bs-dismiss="modal"
-                            >
-                                Close
-                            </button>
-                            <button
-                                type="button"
-                                className="btn btn-sm btn-primary"
-                                onClick={handleAddCetagory}
-                            >
-                                {isEdit ? "Update" : "Save"}
-                            </button>
-                        </div>
+                            <div className="modal-footer">
+                                <button
+                                    type="button"
+                                    className="btn btn-sm btn-secondary"
+                                    data-bs-dismiss="modal"
+                                >
+                                    Close
+                                </button>
+                                <button
+                                    type="submit"
+                                    className="btn btn-sm btn-primary"
+                                    onClick={handleAddCetagory}
+                                    disabled={processing}
+                                >
+                                    {isEdit ? "Update" : "Save"}
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
