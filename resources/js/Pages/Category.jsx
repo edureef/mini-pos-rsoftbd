@@ -82,9 +82,9 @@ const Category = ({ categories }) => {
                             <div className="py-4">
                                 <nav>
                                     <ul className="pagination justify-content-center">
-                                        {categories.links.map((link) => (
+                                        {categories.links.map((link, index) => (
                                             <li
-                                                key={link.label}
+                                                key={index}
                                                 className={`page-item ${
                                                     link.active ? "active" : ""
                                                 } ${

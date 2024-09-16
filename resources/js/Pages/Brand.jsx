@@ -65,8 +65,8 @@ const Brand = ({ brands }) => {
                         <div className="py-4">
                             <nav>
                                 <ul className="pagination justify-content-center">
-                                    {brands.links.map(link => (
-                                        <li key={link.label} className={`page-item ${link.active ? 'active' : ''} ${!link.url ? 'disabled' : ''}`}>
+                                    {brands.links.map((link, index) => (
+                                        <li key={index} className={`page-item ${link.active ? 'active' : ''} ${!link.url ? 'disabled' : ''}`}>
                                             {link.url ? (
                                                 <Link
                                                     className="page-link"

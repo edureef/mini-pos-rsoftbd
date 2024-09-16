@@ -79,9 +79,9 @@ const Group = ({ groups }) => {
                             <div className="py-4">
                                 <nav>
                                     <ul className="pagination justify-content-center">
-                                        {groups.links.map((link) => (
+                                        {groups.links.map((link, index) => (
                                             <li
-                                                key={link.label}
+                                                key={index}
                                                 className={`page-item ${
                                                     link.active ? "active" : ""
                                                 } ${
