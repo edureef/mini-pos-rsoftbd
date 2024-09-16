@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\GroupController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -13,3 +14,8 @@ Route::put('/category/{category}', [CategoryController::class, 'update'])->name(
 Route::delete('/category/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
 
 Route::resource('/brand', BrandController::class);
+
+Route::get('/group', [GroupController::class, 'index'])->name('group.index');
+Route::post('/group', [GroupController::class, 'store'])->name('group.store');
+Route::put('/group/{group}', [GroupController::class, 'update'])->name('group.update');
+Route::delete('/group/{group}', [GroupController::class, 'destroy'])->name('group.destroy');
