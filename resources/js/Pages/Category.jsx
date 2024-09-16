@@ -11,6 +11,9 @@ const Category = ({ categories }) => {
         router.delete(`category/${categoryData.id}`);
     };
 
+    const openEditModal = (category) => {
+        setCategoryData(category);
+    };
     const openDeleteModal = (category) => {
         setCategoryData(category);
     };
@@ -45,7 +48,17 @@ const Category = ({ categories }) => {
                                                 <td>{index + 1}</td>
                                                 <td>{category.name}</td>
                                                 <td>
-                                                    <CategoryModal isEdit={1} />
+                                                    <CategoryModal
+                                                        isEdit={category}
+                                                        categoryData={
+                                                            categoryData
+                                                        }
+                                                        openEditModal={() =>
+                                                            openEditModal(
+                                                                category
+                                                            )
+                                                        }
+                                                    />
                                                     <DeleteModal
                                                         openDeleteModal={() =>
                                                             openDeleteModal(

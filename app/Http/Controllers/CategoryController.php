@@ -23,6 +23,15 @@ class CategoryController extends Controller
         return redirect()->back();
     }
 
+    public function update(Request $request, Category $category)
+    {
+        $validate = $request->validate([
+            'name' => ['required', 'max:50'],
+        ]);
+        $category->update($validate);
+        return redirect()->back();
+    }
+
     public function destroy(Category $category)
     {
         $category->delete();

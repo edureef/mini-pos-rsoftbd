@@ -25,7 +25,7 @@ const Sidebar = ({ isOpen }) => {
                     </Link>
                 </li>
                 <br />
-                <li className={`nav-item ${url === '/category' ? 'active' : ''} ${url === '/brand' ? 'active' : ''}`}>
+                <li className={`nav-item ${url.startsWith('/category') ? 'active' : ''} ${url.startsWith('/brand') ? 'active' : ''}`}>
                     <a className="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false"
                         aria-controls="ui-basic">
                         <i className="icon-layout menu-icon"></i>

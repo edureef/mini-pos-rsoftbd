@@ -1,11 +1,17 @@
 import { useForm } from "@inertiajs/react";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
-export const CategoryModal = ({ isEdit }) => {
+export const CategoryModal = ({ isEdit, categoryData, openEditModal }) => {
     const closeRef = useRef(null);
-    const { data, setData, post, errors, processing, reset } = useForm({
-        name: "",
+    const { data, setData, post, put, errors, processing, reset } = useForm({
+        name: categoryData?.name || "",
     });
+
+    useEffect(() => {
+        if (categoryData) {
+            setData({ name: categoryData.name });
+        }
+    }, [categoryData]);
 
     const handleAddCetagory = (e) => {
         e.preventDefault();
@@ -17,13 +23,22 @@ export const CategoryModal = ({ isEdit }) => {
         });
     };
 
-    const handleUpdateCetagory = () => {};
+    const handleUpdateCetagory = (e) => {
+        e.preventDefault();
+        put(`/category/${categoryData.id}`, {
+            onSuccess: () => {
+                reset();
+                closeRef.current.click();
+            },
+        });
+    };
 
     return (
         <>
             {isEdit ? (
                 <button
                     ref={closeRef}
+                    onClick={openEditModal}
                     type="button"
                     className="btn btn-sm btn-success"
                     data-bs-toggle="modal"
@@ -70,7 +85,7 @@ export const CategoryModal = ({ isEdit }) => {
                                     ? handleUpdateCetagory
                                     : handleAddCetagory
                             }
-                            method="post"
+                            method="POST"
                         >
                             <div className="modal-body">
                                 <div className="input-group input-group-sm mb-3">
@@ -103,7 +118,6 @@ export const CategoryModal = ({ isEdit }) => {
                                 <button
                                     type="submit"
                                     className="btn btn-sm btn-primary"
-                                    onClick={handleAddCetagory}
                                     disabled={processing}
                                 >
                                     {isEdit ? "Update" : "Save"}
