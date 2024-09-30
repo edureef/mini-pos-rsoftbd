@@ -22,7 +22,12 @@ const Sidebar = ({ isOpen }) => {
                             url === "/customer" ? "active" : ""
                         }`}
                     >
-                        <Link className={`nav-link`} href="/">
+                        <Link
+                            className={`nav-link ${
+                                url.startsWith("/customer") ? "active" : ""
+                            }`}
+                            href="/customer"
+                        >
                             <i className="fa fa-user-o menu-icon"></i>
                             <span className="menu-title">Customer</span>
                         </Link>
@@ -62,7 +67,9 @@ const Sidebar = ({ isOpen }) => {
                                     {" "}
                                     <Link
                                         className={`nav-link ${
-                                            url.startsWith("/brand") ? "active" : ""
+                                            url.startsWith("/brand")
+                                                ? "active"
+                                                : ""
                                         }`}
                                         href="/brand"
                                     >
@@ -73,7 +80,9 @@ const Sidebar = ({ isOpen }) => {
                                     {" "}
                                     <Link
                                         className={`nav-link ${
-                                            url.startsWith("/category") ? "active" : ""
+                                            url.startsWith("/category")
+                                                ? "active"
+                                                : ""
                                         }`}
                                         href="/category"
                                     >
@@ -84,7 +93,9 @@ const Sidebar = ({ isOpen }) => {
                                     {" "}
                                     <Link
                                         className={`nav-link ${
-                                            url.startsWith("/group") ? "active" : ""
+                                            url.startsWith("/group")
+                                                ? "active"
+                                                : ""
                                         }`}
                                         href="/group"
                                     >

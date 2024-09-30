@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Customer;
 use App\Models\Group;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -31,6 +32,15 @@ class DatabaseSeeder extends Seeder
         // for ($i = 0; $i < 60000; $i++) {
         //     Group::create([
         //         'name' => fake()->name,
+        //     ]);
+        // }
+
+        // for ($i = 0; $i < 50; $i++) {
+        //     Customer::create([
+        //         'name' => fake()->name,
+        //         'email' => fake()->email,
+        //         'phone_number' => '01' . fake()->numberBetween(100000000, 999999999),
+        //         "address" => fake()->address,
         //     ]);
         // }
     }
