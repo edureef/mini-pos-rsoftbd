@@ -19,7 +19,7 @@ const Sidebar = ({ isOpen }) => {
                     </li>
                     <li
                         className={`nav-item ${
-                            url === "/customer" ? "active" : ""
+                            url.startsWith("/customer") ? "active" : ""
                         }`}
                     >
                         <Link
