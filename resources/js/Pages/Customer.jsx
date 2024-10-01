@@ -7,16 +7,21 @@ const Customer = ({ customers }) => {
         <>
             <Head title="Customer" />
             <Layout>
-                <div className="card mb-3">
+                <div className="card shadow-sm mb-3">
                     <div className="card-body">
                         <div className="d-flex justify-content-between align-items-center">
                             <h4>Customer Page</h4>
-                            {/* <CategoryModal /> */}
+                            <Link
+                                className="btn btn-sm btn-primary"
+                                href="customer/create"
+                            >
+                                Add Customer
+                            </Link>
                         </div>
                     </div>
                 </div>
 
-                <div className="card">
+                <div className="card shadow-sm">
                     <div className="card-body">
                         <div className="table-responsive text-center">
                             <table className="table table-hover">
