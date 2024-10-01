@@ -1,8 +1,24 @@
 import React from "react";
 import Layout from "../components/Layout";
-import { Link } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 
 const CreateCustomer = () => {
+    const { data, setData, post, processing, errors, reset } = useForm({
+        name: "",
+        email: "",
+        phone_number: "",
+        address: "",
+    });
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        post("/customer", {
+            onSuccess: () => {
+                reset();
+            },
+        });
+    };
+
     return (
         <Layout>
             <div className="card mb-3 shadow-sm">
@@ -21,7 +37,7 @@ const CreateCustomer = () => {
 
             <div className="card shadow-sm">
                 <div className="card-body">
-                    <form action="" method="post">
+                    <form onSubmit={handleSubmit} method="post">
                         <div className="row mb-3">
                             <div className="col-6">
                                 <label className="form-label">
@@ -29,15 +45,35 @@ const CreateCustomer = () => {
                                 </label>
                                 <input
                                     type="text"
-                                    className="form-control form-control-sm"
+                                    className={`form-control form-control-sm ${
+                                        errors.name && "is-invalid"
+                                    }`}
+                                    value={data.name}
+                                    onChange={(e) =>
+                                        setData("name", e.target.value)
+                                    }
                                 />
+                                {errors.name && (
+                                    <p className="text-danger">{errors.name}</p>
+                                )}
                             </div>
                             <div className="col-6">
                                 <label className="form-label">Email</label>
                                 <input
                                     type="email"
-                                    className="form-control form-control-sm"
+                                    className={`form-control form-control-sm ${
+                                        errors.email && "is-invalid"
+                                    }`}
+                                    value={data.email}
+                                    onChange={(e) =>
+                                        setData("email", e.target.value)
+                                    }
                                 />
+                                {errors.email && (
+                                    <p className="text-danger">
+                                        {errors.email}
+                                    </p>
+                                )}
                             </div>
                         </div>
                         <div className="row mb-3">
@@ -46,22 +82,45 @@ const CreateCustomer = () => {
                                     Phone Number
                                 </label>
                                 <input
-                                    type="text"
-                                    className="form-control form-control-sm"
+                                    type="number"
+                                    className={`form-control form-control-sm ${
+                                        errors.phone_number && "is-invalid"
+                                    }`}
+                                    value={data.phone_number}
+                                    onChange={(e) =>
+                                        setData("phone_number", e.target.value)
+                                    }
                                 />
+                                {errors.phone_number && (
+                                    <p className="text-danger">
+                                        {errors.phone_number}
+                                    </p>
+                                )}
                             </div>
                             <div className="col-6">
                                 <label className="form-label">Address</label>
                                 <input
-                                    type="email"
-                                    className="form-control form-control-sm"
+                                    type="text"
+                                    className={`form-control form-control-sm ${
+                                        errors.address && "is-invalid"
+                                    }`}
+                                    value={data.address}
+                                    onChange={(e) =>
+                                        setData("address", e.target.value)
+                                    }
                                 />
+                                {errors.address && (
+                                    <p className="text-danger">
+                                        {errors.address}
+                                    </p>
+                                )}
                             </div>
                         </div>
                         <div className="text-end">
                             <button
                                 className="btn btn-sm btn-primary"
                                 type="submit"
+                                disabled={processing}
                             >
                                 Add Customer
                             </button>
