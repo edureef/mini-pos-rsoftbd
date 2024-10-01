@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "./components/Layout";
-import { Head, Link } from "@inertiajs/react";
+import DeleteModal from "./components/modals/DeleteModal";
+import { Head, Link, router } from "@inertiajs/react";
 
 const Customer = ({ customers }) => {
+    const [customerData, setCustomerData] = useState([]);
+
+    const openDeleteModal = (data) => {
+        setCustomerData(data);
+    };
+
+    const handleDeleteBtn = () => {
+        router.delete(`customer/${customerData.id}`);
+    };
+
     return (
         <>
             <Head title="Customer" />
@@ -55,20 +66,20 @@ const Customer = ({ customers }) => {
                                                                 category
                                                             )
                                                         }
-                                                    />
+                                                    /> */}
                                                     <DeleteModal
                                                         openDeleteModal={() =>
                                                             openDeleteModal(
-                                                                category
+                                                                customer
                                                             )
                                                         }
                                                         dataName={
-                                                            categoryData.name
+                                                            customerData.name
                                                         }
                                                         handleDeleteBtn={
                                                             handleDeleteBtn
                                                         }
-                                                    /> */}
+                                                    />
                                                 </td>
                                             </tr>
                                         );
