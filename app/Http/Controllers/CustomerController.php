@@ -55,7 +55,7 @@ class CustomerController extends Controller
      */
     public function edit(Customer $customer)
     {
-        //
+        return Inertia::render('customer/editCustomer', $customer);
     }
 
     /**
@@ -63,7 +63,15 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
-        //
+        $validtae = $request->validate([
+            'name' => ['required', 'max:50'],
+            'email' => ['required', 'email'],
+            'phone_number' => ['required'],
+            'address' => ['required'],
+        ]);
+
+        $customer->update($validtae);
+        return redirect()->route('customer.index');
     }
 
     /**

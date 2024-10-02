@@ -56,17 +56,13 @@ const Customer = ({ customers }) => {
                                                 <td>{customer.phone_number}</td>
                                                 <td>{customer.address}</td>
                                                 <td>
-                                                    {/* <CategoryModal
-                                                        isEdit={category}
-                                                        categoryData={
-                                                            categoryData
-                                                        }
-                                                        openEditModal={() =>
-                                                            openEditModal(
-                                                                category
-                                                            )
-                                                        }
-                                                    /> */}
+                                                    <Link
+                                                        type="button"
+                                                        className="btn btn-sm btn-success"
+                                                        href={`/customer/${customer.id}/edit`}
+                                                    >
+                                                        <i className="fa fa-edit"></i>
+                                                    </Link>
                                                     <DeleteModal
                                                         openDeleteModal={() =>
                                                             openDeleteModal(
