@@ -4,6 +4,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,6 +16,7 @@ Route::put('/category/{category}', [CategoryController::class, 'update'])->name(
 Route::delete('/category/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
 
 Route::resource('/customer', CustomerController::class);
+Route::resource('/supplier', SupplierController::class);
 Route::resource('/brand', BrandController::class);
 
 Route::get('/group', [GroupController::class, 'index'])->name('group.index');
