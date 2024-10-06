@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Group;
+use App\Models\Supplier;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -40,6 +41,16 @@ class DatabaseSeeder extends Seeder
         //         'name' => fake()->name,
         //         'email' => fake()->email,
         //         'phone_number' => '01' . fake()->numberBetween(100000000, 999999999),
+        //         "address" => fake()->address,
+        //     ]);
+        // }
+
+        // for ($i = 0; $i < 20; $i++) {
+        //     Supplier::create([
+        //         'name' => fake()->name,
+        //         'email' => fake()->email,
+        //         'phone_number' => '01' . fake()->numberBetween(100000000, 999999999),
+        //         "company_name" => fake()->company,
         //         "address" => fake()->address,
         //     ]);
         // }
