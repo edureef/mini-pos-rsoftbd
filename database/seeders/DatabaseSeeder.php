@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Group;
@@ -24,19 +25,25 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        // for ($i = 0; $i < 20; $i++) {
+        // for ($i = 0; $i < 100000; $i++) {
+        //     Brand::create([
+        //         'name' => fake()->name,
+        //     ]);
+        // }
+
+        // for ($i = 0; $i < 100000; $i++) {
         //     Category::create([
         //         'name' => fake()->name,
         //     ]);
         // }
 
-        // for ($i = 0; $i < 60000; $i++) {
+        // for ($i = 0; $i < 100000; $i++) {
         //     Group::create([
         //         'name' => fake()->name,
         //     ]);
         // }
 
-        // for ($i = 0; $i < 50; $i++) {
+        // for ($i = 0; $i < 100000; $i++) {
         //     Customer::create([
         //         'name' => fake()->name,
         //         'email' => fake()->email,
@@ -45,7 +52,7 @@ class DatabaseSeeder extends Seeder
         //     ]);
         // }
 
-        // for ($i = 0; $i < 20; $i++) {
+        // for ($i = 0; $i < 100000; $i++) {
         //     Supplier::create([
         //         'name' => fake()->name,
         //         'email' => fake()->email,
