@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Group;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ProductController extends Controller
 {
@@ -12,7 +16,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::latest()->with('brand', 'category', 'group')->paginate(10);
+        return Inertia::render('product/ViewProduct', compact('products'));
     }
 
     /**
@@ -20,15 +25,29 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $brands = Brand::latest()->paginate(1000);
+        $categorys = Category::latest()->paginate(1000);
+        $groups = Group::latest()->paginate(1000);
+        return Inertia::render('product/AddProduct', compact('brands', 'categorys', 'groups'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Product $product)
     {
-        //
+        $validtae = $request->validate([
+            'name' => ['required', 'max:50'],
+            'description' => ['required', 'max:255'],
+            'brand_id' => ['required'],
+            'category_id' => ['required'],
+            'group_id' => ['required'],
+            'unit' => ['required'],
+        ]);
+        $barcode = ['barcode' => random_int(1000000, 9999999)];
+        $product->create($validtae + $barcode);
+
+        return redirect()->route('product.index');
     }
 
     /**
@@ -60,6 +79,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        return redirect()->back();
     }
 }

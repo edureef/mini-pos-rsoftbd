@@ -53,7 +53,7 @@ const Sidebar = ({ isOpen }) => {
                             url.startsWith("/category") ? "active" : ""
                         } ${url.startsWith("/brand") ? "active" : ""} ${
                             url.startsWith("/group") ? "active" : ""
-                        }`}
+                        } ${url.startsWith("/product") ? "active" : ""}`}
                     >
                         <a
                             className="nav-link"
@@ -111,13 +111,13 @@ const Sidebar = ({ isOpen }) => {
                                     {" "}
                                     <Link
                                         className={`nav-link ${
-                                            url.startsWith("/add_product")
+                                            url.startsWith("/product")
                                                 ? "active"
                                                 : ""
                                         }`}
-                                        href=""
+                                        href="/product"
                                     >
-                                        Add Product
+                                        Product
                                     </Link>
                                 </li>
                             </ul>
