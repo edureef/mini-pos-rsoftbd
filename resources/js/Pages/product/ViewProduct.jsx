@@ -59,6 +59,13 @@ const ViewProduct = ({ products }) => {
                                                 <td>{product.unit}</td>
                                                 <td>{product.description}</td>
                                                 <td>
+                                                    <Link
+                                                        type="button"
+                                                        className="btn btn-sm btn-success"
+                                                        href={`/product/${product.id}/edit`}
+                                                    >
+                                                        <i className="fa fa-edit"></i>
+                                                    </Link>
                                                     <DeleteModal
                                                         openDeleteModal={() =>
                                                             openDeleteModal(

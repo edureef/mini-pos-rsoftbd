@@ -1,0 +1,219 @@
+import { Head, Link, useForm } from "@inertiajs/react";
+import Layout from "../components/Layout";
+
+const EditProduct = ({ products, brands, categorys, groups }) => {
+    const { data, setData, put, processing, errors, reset } = useForm({
+        name: products.name,
+        description: products.description,
+        brand_id: products.brand_id,
+        category_id: products.category_id,
+        group_id: products.group_id,
+        unit: products.unit,
+    });
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        put(`/product/${products.id}`, {
+            onSuccess: () => {
+                reset();
+            },
+        });
+    };
+
+    return (
+        <>
+            <Head title="Edit Product" />
+            <Layout>
+                <div className="card mb-3 shadow-sm">
+                    <div className="card-body">
+                        <div className="d-flex justify-content-between align-items-center">
+                            <h4>Product Edit</h4>
+                            <Link
+                                className="btn btn-sm btn-primary"
+                                href="/product"
+                            >
+                                Back
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="card shadow-sm">
+                    <div className="card-body">
+                        <form onSubmit={handleSubmit} method="post">
+                            <div className="row mb-3">
+                                <div className="col-6">
+                                    <label className="form-label">
+                                        Product Name
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className={`form-control form-control-sm ${
+                                            errors.name && "is-invalid"
+                                        }`}
+                                        value={data.name}
+                                        onChange={(e) =>
+                                            setData("name", e.target.value)
+                                        }
+                                    />
+                                    {errors.name && (
+                                        <p className="invalid-feedback">
+                                            {errors.name}
+                                        </p>
+                                    )}
+                                </div>
+                                <div className="col-6">
+                                    <label className="form-label">Brand</label>
+                                    <select
+                                        className={`form-select text-dark ${
+                                            errors.brand_id && "is-invalid"
+                                        }`}
+                                        onChange={(e) =>
+                                            setData("brand_id", e.target.value)
+                                        }
+                                        value={data.brand_id}
+                                    >
+                                        <option value="">Select a brand</option>
+                                        {brands.data.map((element) => (
+                                            <option
+                                                key={element.id}
+                                                value={element.id}
+                                            >
+                                                {element.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    {errors.brand_id && (
+                                        <p className="invalid-feedback">
+                                            {errors.brand_id}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+                            <div className="row mb-3">
+                                <div className="col-6">
+                                    <label className="form-label">
+                                        Category
+                                    </label>
+                                    <select
+                                        className={`form-select text-dark ${
+                                            errors.category_id && "is-invalid"
+                                        }`}
+                                        onChange={(e) =>
+                                            setData(
+                                                "category_id",
+                                                e.target.value
+                                            )
+                                        }
+                                        value={data.category_id}
+                                    >
+                                        <option value="">
+                                            Select a category
+                                        </option>
+                                        {categorys.data.map((element) => (
+                                            <option
+                                                key={element.id}
+                                                value={element.id}
+                                            >
+                                                {element.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    {errors.category_id && (
+                                        <p className="invalid-feedback">
+                                            {errors.category_id}
+                                        </p>
+                                    )}
+                                </div>
+                                <div className="col-6">
+                                    <label className="form-label">Group</label>
+                                    <select
+                                        className={`form-select text-dark ${
+                                            errors.group_id && "is-invalid"
+                                        }`}
+                                        onChange={(e) =>
+                                            setData("group_id", e.target.value)
+                                        }
+                                        value={data.group_id}
+                                    >
+                                        <option value="">Select a group</option>
+                                        {groups.data.map((element) => (
+                                            <option
+                                                key={element.id}
+                                                value={element.id}
+                                            >
+                                                {element.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    {errors.group_id && (
+                                        <p className="invalid-feedback">
+                                            {errors.group_id}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+                            <div className="row mb-3">
+                                <div className="col-6">
+                                    <label className="form-label">Unit</label>
+                                    <select
+                                        className={`form-select text-dark ${
+                                            errors.unit && "is-invalid"
+                                        }`}
+                                        value={data.unit}
+                                        onChange={(e) =>
+                                            setData("unit", e.target.value)
+                                        }
+                                    >
+                                        <option value="">Select a unit</option>
+                                        <option value="kg">KG</option>
+                                        <option value="pcs">PCS</option>
+                                    </select>
+                                    {errors.unit && (
+                                        <p className="invalid-feedback">
+                                            {errors.unit}
+                                        </p>
+                                    )}
+                                </div>
+                                <div className="col-6">
+                                    <label className="form-label">
+                                        Product Description
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className={`form-control form-control-sm ${
+                                            errors.description && "is-invalid"
+                                        }`}
+                                        value={data.description}
+                                        onChange={(e) =>
+                                            setData(
+                                                "description",
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+                                    {errors.description && (
+                                        <p className="invalid-feedback">
+                                            {errors.description}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+                            <div className="text-end">
+                                <button
+                                    className="btn btn-sm btn-primary"
+                                    type="submit"
+                                    disabled={processing}
+                                >
+                                    Update Product
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </Layout>
+        </>
+    );
+};
+
+export default EditProduct;

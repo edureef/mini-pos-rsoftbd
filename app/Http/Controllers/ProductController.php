@@ -63,7 +63,11 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $products = $product->with('brand', 'category', 'group')->find($product->id);
+        $brands = Brand::latest()->paginate(1000);
+        $categorys = Category::latest()->paginate(1000);
+        $groups = Group::latest()->paginate(1000);
+        return Inertia::render('product/EditProduct', compact('products', 'brands', 'categorys', 'groups'));
     }
 
     /**
@@ -71,7 +75,17 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $validtae = $request->validate([
+            'name' => ['required', 'max:50'],
+            'description' => ['required', 'max:255'],
+            'brand_id' => ['required'],
+            'category_id' => ['required'],
+            'group_id' => ['required'],
+            'unit' => ['required'],
+        ]);
+        $product->update($validtae);
+
+        return redirect()->route('product.index');
     }
 
     /**
