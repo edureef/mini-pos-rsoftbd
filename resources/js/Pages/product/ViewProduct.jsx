@@ -40,11 +40,7 @@ const ViewProduct = ({ products }) => {
                                     <tr>
                                         <th>Barcode</th>
                                         <th>Product Name</th>
-                                        <th>Brand</th>
-                                        <th>Category</th>
-                                        <th>Group</th>
                                         <th>Unit</th>
-                                        <th>Product Description</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -56,16 +52,20 @@ const ViewProduct = ({ products }) => {
                                                     <Barcode
                                                         value={product.barcode}
                                                         width={2}
+                                                        height={30}
+                                                        fontSize={12}
                                                     />
                                                 </td>
-                                                {/* <td>{product.barcode}</td> */}
                                                 <td>{product.name}</td>
-                                                <td>{product.brand.name}</td>
-                                                <td>{product.category.name}</td>
-                                                <td>{product.group.name}</td>
                                                 <td>{product.unit}</td>
-                                                <td>{product.description}</td>
                                                 <td>
+                                                    <Link
+                                                        type="button"
+                                                        className="btn btn-sm btn-primary me-2"
+                                                        href={`/product/${product.id}`}
+                                                    >
+                                                        <i className="fa fa-eye"></i>
+                                                    </Link>
                                                     <Link
                                                         type="button"
                                                         className="btn btn-sm btn-success"

@@ -55,7 +55,8 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        $products = $product->with('brand', 'category', 'group')->find($product->id);
+        return Inertia::render('product/ProductDetails', compact('products'));
     }
 
     /**
