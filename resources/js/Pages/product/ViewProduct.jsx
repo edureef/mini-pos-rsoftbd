@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Layout from "./../components/Layout";
 import { Link, router } from "@inertiajs/react";
 import DeleteModal from "../components/modals/DeleteModal";
+import Barcode from "react-barcode";
 
 const ViewProduct = ({ products }) => {
     const [productData, setProductData] = useState([]);
@@ -51,7 +52,13 @@ const ViewProduct = ({ products }) => {
                                     {products.data.map((product) => {
                                         return (
                                             <tr key={product.id}>
-                                                <td>{product.barcode}</td>
+                                                <td>
+                                                    <Barcode
+                                                        value={product.barcode}
+                                                        width={2}
+                                                    />
+                                                </td>
+                                                {/* <td>{product.barcode}</td> */}
                                                 <td>{product.name}</td>
                                                 <td>{product.brand.name}</td>
                                                 <td>{product.category.name}</td>
