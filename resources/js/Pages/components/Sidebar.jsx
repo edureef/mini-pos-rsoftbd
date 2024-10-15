@@ -125,10 +125,10 @@ const Sidebar = ({ isOpen }) => {
                     </li>
                     <li
                         className={`nav-item ${
-                            url === "/prchase" ? "active" : ""
+                            url.startsWith("/purchase") ? "active" : ""
                         }`}
                     >
-                        <Link className={`nav-link`} href="/">
+                        <Link className={`nav-link`} href="/purchase">
                             <i className="fa fa-shopping-cart menu-icon"></i>
                             <span className="menu-title">Purchase</span>
                         </Link>

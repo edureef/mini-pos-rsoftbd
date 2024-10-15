@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PurchaseProductController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,7 @@ Route::resource('/customer', CustomerController::class);
 Route::resource('/supplier', SupplierController::class);
 Route::resource('/brand', BrandController::class);
 Route::resource('/product', ProductController::class);
+Route::resource('/purchase', PurchaseProductController::class);
 
 Route::get('/group', [GroupController::class, 'index'])->name('group.index');
 Route::post('/group', [GroupController::class, 'store'])->name('group.store');
