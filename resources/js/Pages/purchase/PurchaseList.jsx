@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Layout from "./../components/Layout";
-import { Link, router } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import DeleteModal from "./../components/modals/DeleteModal";
 
 const PurchaseList = () => {
@@ -38,6 +38,7 @@ const PurchaseList = () => {
     ];
     return (
         <>
+            <Head title="Purchase List" />
             <Layout>
                 <div className="card mb-3 shadow-sm">
                     <div className="card-body">
