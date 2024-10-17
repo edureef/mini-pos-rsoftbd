@@ -21,7 +21,7 @@ class PurchaseProductController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('purchase/AddPurchase');
     }
 
     /**
