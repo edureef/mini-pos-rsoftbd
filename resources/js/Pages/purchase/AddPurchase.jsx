@@ -1,5 +1,4 @@
 import { Head, Link, useForm } from "@inertiajs/react";
-import React from "react";
 import Layout from "../components/Layout";
 
 const AddPurchase = () => {
@@ -8,6 +7,8 @@ const AddPurchase = () => {
         products: [{}],
         discount: "",
         paidAmount: "",
+        dueAmount: "",
+        grandTotal: 0,
     });
 
     const addRow = () => {
@@ -30,9 +31,27 @@ const AddPurchase = () => {
         setData("products", newProducts);
     };
 
+    const calculateTotals = () => {
+        const netTotal = data.products.reduce(
+            (sum, item) => sum + (item.quantity * item.price || 0),
+            0
+        );
+        const discountAmount = (data.discount / 100) * netTotal;
+        const grandTotal = (netTotal - discountAmount).toFixed();
+        const dueAmount = (grandTotal - (data.paidAmount || 0)).toFixed();
+
+        return { netTotal, grandTotal, dueAmount };
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(data);
+        const { netTotal, grandTotal, dueAmount } = calculateTotals();
+
+        setData("grandTotal", grandTotal);
+        setData("dueAmount", dueAmount);
+
+        // Here you would send `data` to the backend
+        console.log({ ...data, grandTotal, dueAmount });
     };
 
     return (
@@ -42,7 +61,7 @@ const AddPurchase = () => {
                 <div className="card mb-3 shadow-sm">
                     <div className="card-body">
                         <div className="d-flex justify-content-between align-items-center">
-                            <h4>Purchase List</h4>
+                            <h4>Add Purchase</h4>
                             <Link
                                 className="btn btn-sm btn-primary"
                                 href="/purchase"
@@ -88,7 +107,6 @@ const AddPurchase = () => {
                                     <tr>
                                         <th>Product</th>
                                         <th>Unit</th>
-                                        <th>Size</th>
                                         <th>Quantity</th>
                                         <th>Price</th>
                                         <th>Total</th>
@@ -136,16 +154,6 @@ const AddPurchase = () => {
                                                     <option value="litre" />
                                                     <option value="meter" />
                                                 </datalist>
-                                            </td>
-                                            <td>
-                                                <input
-                                                    type="number"
-                                                    name="size"
-                                                    className="form-control form-control-sm"
-                                                    onChange={(e) =>
-                                                        handleChange(index, e)
-                                                    }
-                                                />
                                             </td>
                                             <td>
                                                 <input
@@ -220,13 +228,9 @@ const AddPurchase = () => {
                                                 type="number"
                                                 className="form-control"
                                                 disabled
-                                                value={data.products.reduce(
-                                                    (sum, item) =>
-                                                        sum +
-                                                        (item.quantity *
-                                                            item.price || 0),
-                                                    0
-                                                )}
+                                                value={
+                                                    calculateTotals().netTotal
+                                                }
                                             />
                                         </div>
                                     </div>
@@ -281,14 +285,7 @@ const AddPurchase = () => {
                                                 className="form-control"
                                                 disabled
                                                 value={
-                                                    data.products.reduce(
-                                                        (sum, item) =>
-                                                            sum +
-                                                            (item.quantity *
-                                                                item.price ||
-                                                                0),
-                                                        0
-                                                    ) - (data.discount || 0)
+                                                    calculateTotals().grandTotal
                                                 }
                                             />
                                         </div>
@@ -303,16 +300,7 @@ const AddPurchase = () => {
                                                 className="form-control"
                                                 disabled
                                                 value={
-                                                    data.products.reduce(
-                                                        (sum, item) =>
-                                                            sum +
-                                                            (item.quantity *
-                                                                item.price ||
-                                                                0),
-                                                        0
-                                                    ) -
-                                                    (data.discount || 0) -
-                                                    (data.paidAmount || 0)
+                                                    calculateTotals().dueAmount
                                                 }
                                             />
                                         </div>
