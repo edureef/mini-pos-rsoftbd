@@ -1,10 +1,10 @@
 import { Head, Link, useForm } from "@inertiajs/react";
 import Layout from "../components/Layout";
 
-const AddPurchase = () => {
+const AddPurchase = ({ suppliers, products }) => {
     const { data, setData } = useForm({
         supplier: "",
-        products: [{}],
+        products: [{ quantity: 0, price: 0 }],
         discount: "",
         paidAmount: "",
         dueAmount: "",
@@ -28,30 +28,40 @@ const AddPurchase = () => {
             ...newProducts[index],
             [e.target.name]: e.target.value,
         };
+
+        if (e.target.name === "quantity" || e.target.name === "price") {
+            newProducts[index][e.target.name] = Number(e.target.value) || 0;
+        }
         setData("products", newProducts);
     };
 
     const calculateTotals = () => {
         const netTotal = data.products.reduce(
-            (sum, item) => sum + (item.quantity * item.price || 0),
+            (sum, item) =>
+                sum + (Number(item.quantity) || 0) * (Number(item.price) || 0),
             0
         );
-        const discountAmount = (data.discount / 100) * netTotal;
-        const grandTotal = (netTotal - discountAmount).toFixed();
-        const dueAmount = (grandTotal - (data.paidAmount || 0)).toFixed();
+        const discountAmount = (Number(data.discount) / 100) * netTotal;
+        const grandTotal = netTotal - discountAmount;
+        const dueAmount = grandTotal - (Number(data.paidAmount) || 0);
 
-        return { netTotal, grandTotal, dueAmount };
+        return {
+            netTotal: netTotal.toFixed(2),
+            grandTotal: grandTotal.toFixed(2),
+            dueAmount: dueAmount.toFixed(2),
+        };
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const { netTotal, grandTotal, dueAmount } = calculateTotals();
 
+        setData("netTotal", netTotal);
         setData("grandTotal", grandTotal);
         setData("dueAmount", dueAmount);
 
         // Here you would send `data` to the backend
-        console.log({ ...data, grandTotal, dueAmount });
+        console.log({ ...data, netTotal, grandTotal, dueAmount });
     };
 
     return (
@@ -87,12 +97,11 @@ const AddPurchase = () => {
                                     }
                                 >
                                     <option value="">Select Supplier</option>
-                                    <option value="supplier1">
-                                        Supplier 1
-                                    </option>
-                                    <option value="supplier2">
-                                        Supplier 2
-                                    </option>
+                                    {suppliers.data.map((item, index) => (
+                                        <option key={index} value={item.id}>
+                                            {item.name}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
                         </div>
@@ -115,16 +124,29 @@ const AddPurchase = () => {
                                 </thead>
                                 <tbody>
                                     {data.products.map((item, index) => (
-                                        <tr key={index}>
+                                        <tr key={item.id || index}>
                                             <td>
-                                                <input
-                                                    type="text"
+                                                <select
+                                                    className="form-select form-select-sm text-dark"
                                                     name="productName"
-                                                    className="form-control form-control-sm"
                                                     onChange={(e) =>
                                                         handleChange(index, e)
                                                     }
-                                                />
+                                                >
+                                                    <option value="">
+                                                        Select Product
+                                                    </option>
+                                                    {products.data.map(
+                                                        (item, index) => (
+                                                            <option
+                                                                key={index}
+                                                                value={item.id}
+                                                            >
+                                                                {item.name}
+                                                            </option>
+                                                        )
+                                                    )}
+                                                </select>
                                             </td>
                                             <td>
                                                 <input
@@ -181,8 +203,10 @@ const AddPurchase = () => {
                                                     className="form-control form-control-sm"
                                                     disabled
                                                     value={
-                                                        item.quantity *
-                                                            item.price || 0
+                                                        (
+                                                            item.quantity *
+                                                            item.price
+                                                        ).toFixed(2) || 0
                                                     }
                                                 />
                                             </td>

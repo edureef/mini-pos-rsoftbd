@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\PurchaseProduct;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -21,7 +23,9 @@ class PurchaseProductController extends Controller
      */
     public function create()
     {
-        return Inertia::render('purchase/AddPurchase');
+        $suppliers = Supplier::latest()->paginate(1000);
+        $products = Product::latest()->paginate(1000);
+        return Inertia::render('purchase/AddPurchase', compact('suppliers', 'products'));
     }
 
     /**
