@@ -33,7 +33,15 @@ class PurchaseProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        $validated = $request->validate([
+            'supplier_id' => 'required',
+            'products' => 'required',
+            'discount' => 'required',
+            'paidAmount' => 'required',
+        ]);
+
+        return redirect()->route('purchase.index');
     }
 
     /**

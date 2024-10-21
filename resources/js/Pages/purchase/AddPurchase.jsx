@@ -1,10 +1,11 @@
-import { Head, Link, router, useForm } from "@inertiajs/react";
+import { Head, Link, useForm } from "@inertiajs/react";
 import Layout from "../components/Layout";
 
 const AddPurchase = ({ suppliers, products }) => {
-    const { data, setData } = useForm({
+    const { data, setData, post, processing, errors } = useForm({
         supplier_id: "",
-        products: [{}],
+        products: [],
+        netTotal: "",
         discount: "",
         paidAmount: "",
         dueAmount: "",
@@ -53,15 +54,7 @@ const AddPurchase = ({ suppliers, products }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const { netTotal, grandTotal, dueAmount } = calculateTotals();
-
-        setData("netTotal", netTotal);
-        setData("grandTotal", grandTotal);
-        setData("dueAmount", dueAmount);
-
-        // Here you would send `data` to the backend
-        router.post("/purchase", { ...data, netTotal, grandTotal, dueAmount });
-        console.log({ ...data, netTotal, grandTotal, dueAmount });
+        post("/purchase");
     };
 
     return (
@@ -103,6 +96,11 @@ const AddPurchase = ({ suppliers, products }) => {
                                         </option>
                                     ))}
                                 </select>
+                                {errors.supplier_id && (
+                                    <div className="text-danger">
+                                        {errors.supplier_id}
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -201,7 +199,7 @@ const AddPurchase = ({ suppliers, products }) => {
                                             </td>
                                             <td>
                                                 <input
-                                                    type="text"
+                                                    type="number"
                                                     className="form-control form-control-sm"
                                                     disabled
                                                     value={
@@ -224,6 +222,26 @@ const AddPurchase = ({ suppliers, products }) => {
                                             </td>
                                         </tr>
                                     ))}
+                                    {errors.products && (
+                                        <tr>
+                                            <td
+                                                colSpan="6"
+                                                className="text-center text-danger"
+                                            >
+                                                {errors.products}
+                                            </td>
+                                        </tr>
+                                    )}
+                                    {/* {data.products.length === 0 && (
+                                        <tr>
+                                            <td
+                                                colSpan="6"
+                                                className="text-center"
+                                            >
+                                                No products found
+                                            </td>
+                                        </tr>
+                                    )} */}
                                 </tbody>
                             </table>
                         </div>
@@ -255,7 +273,14 @@ const AddPurchase = ({ suppliers, products }) => {
                                                 className="form-control"
                                                 disabled
                                                 value={
-                                                    calculateTotals().netTotal
+                                                    (data.netTotal =
+                                                        calculateTotals().netTotal)
+                                                }
+                                                onChange={(e) =>
+                                                    setData(
+                                                        "netTotal",
+                                                        e.target.value
+                                                    )
                                                 }
                                             />
                                         </div>
@@ -267,7 +292,7 @@ const AddPurchase = ({ suppliers, products }) => {
                                         <div className="col-sm-7">
                                             <div className="input-group">
                                                 <input
-                                                    type="text"
+                                                    type="number"
                                                     className="form-control form-control-sm"
                                                     value={data.discount}
                                                     onChange={(e) =>
@@ -281,6 +306,11 @@ const AddPurchase = ({ suppliers, products }) => {
                                                     %
                                                 </span>
                                             </div>
+                                            {errors.discount && (
+                                                <p className="text-danger">
+                                                    {errors.discount}
+                                                </p>
+                                            )}
                                         </div>
                                     </div>
                                     <div className="row mb-2">
@@ -299,6 +329,11 @@ const AddPurchase = ({ suppliers, products }) => {
                                                     )
                                                 }
                                             />
+                                            {errors.paidAmount && (
+                                                <p className="text-danger">
+                                                    {errors.paidAmount}
+                                                </p>
+                                            )}
                                         </div>
                                     </div>
                                     <div className="row mb-2">
@@ -311,7 +346,14 @@ const AddPurchase = ({ suppliers, products }) => {
                                                 className="form-control"
                                                 disabled
                                                 value={
-                                                    calculateTotals().grandTotal
+                                                    (data.grandTotal =
+                                                        calculateTotals().grandTotal)
+                                                }
+                                                onChange={(e) =>
+                                                    setData(
+                                                        "grandTotal",
+                                                        e.target.value
+                                                    )
                                                 }
                                             />
                                         </div>
@@ -326,7 +368,14 @@ const AddPurchase = ({ suppliers, products }) => {
                                                 className="form-control"
                                                 disabled
                                                 value={
-                                                    calculateTotals().dueAmount
+                                                    (data.dueAmount =
+                                                        calculateTotals().dueAmount)
+                                                }
+                                                onChange={(e) =>
+                                                    setData(
+                                                        "dueAmount",
+                                                        e.target.value
+                                                    )
                                                 }
                                             />
                                         </div>
@@ -336,6 +385,7 @@ const AddPurchase = ({ suppliers, products }) => {
                                             <button
                                                 className="btn w-100 btn-primary"
                                                 type="submit"
+                                                disabled={processing}
                                             >
                                                 Save
                                             </button>
