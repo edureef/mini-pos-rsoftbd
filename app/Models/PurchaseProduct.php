@@ -19,4 +19,14 @@ class PurchaseProduct extends Model
         'dueAmount',
         'grandTotal',
     ];
+
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
+    }
+
+    protected $casts = [
+        'products' => 'array',
+        'created_at' => 'datetime:d-m-Y',
+    ];
 }

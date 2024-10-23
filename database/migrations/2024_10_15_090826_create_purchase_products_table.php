@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('supplier_id')->constrained()->cascadeOnUpdate()->restrictOnDelete();
             $table->json('products');
-            $table->enum('payment_status', ['paid', 'unpaid'])->default('unpaid');
+            $table->enum('payment_status', ['paid', 'due'])->default('due');
             $table->float('netTotal');
             $table->float('discount');
             $table->float('paidAmount');

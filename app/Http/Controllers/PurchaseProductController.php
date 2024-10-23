@@ -15,7 +15,8 @@ class PurchaseProductController extends Controller
      */
     public function index()
     {
-        return Inertia::render('purchase/PurchaseList');
+        $purchases = PurchaseProduct::latest()->with('supplier')->paginate(10);
+        return Inertia::render('purchase/PurchaseList', compact('purchases'));
     }
 
     /**
@@ -33,12 +34,22 @@ class PurchaseProductController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        $validated = $request->validate([
+        $request->validate([
             'supplier_id' => 'required',
-            'products' => 'required',
+            'products' => 'required|array',
             'discount' => 'required',
             'paidAmount' => 'required',
+        ]);
+
+        PurchaseProduct::create([
+            'supplier_id' => $request->supplier_id,
+            'products' => $request->products,
+            'netTotal' => $request->netTotal,
+            'discount' => $request->discount,
+            'paidAmount' => $request->paidAmount,
+            'dueAmount' => $request->dueAmount,
+            'grandTotal' => $request->grandTotal,
+            'payment_status' => $request->dueAmount > 0 ? 'due' : 'paid',
         ]);
 
         return redirect()->route('purchase.index');

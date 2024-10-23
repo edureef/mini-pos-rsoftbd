@@ -3,7 +3,7 @@ import Layout from "./../components/Layout";
 import { Head, Link, router } from "@inertiajs/react";
 import DeleteModal from "./../components/modals/DeleteModal";
 
-const PurchaseList = () => {
+const PurchaseList = ({ purchases }) => {
     const [purchaseData, setPurchaseData] = useState([]);
     const openDeleteModal = (purchase) => {
         setPurchaseData(purchase);
@@ -12,30 +12,7 @@ const PurchaseList = () => {
     const handleDeleteBtn = () => {
         router.delete(`purchase/${id}`);
     };
-    const purchases = [
-        {
-            id: 1,
-            date: "2022-01-01",
-            supplier: {
-                id: 1,
-                name: "Supplier 1",
-            },
-            payment_status: "Paid",
-            grand_total: 100,
-            payment_due: 0,
-        },
-        {
-            id: 2,
-            date: "2022-02-01",
-            supplier: {
-                id: 2,
-                name: "Supplier 2",
-            },
-            payment_status: "Due",
-            grand_total: 200,
-            payment_due: 100,
-        },
-    ];
+
     return (
         <>
             <Head title="Purchase List" />
@@ -69,16 +46,16 @@ const PurchaseList = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {purchases.map((purchase) => {
+                                    {purchases.data.map((purchase) => {
                                         return (
                                             <tr key={purchase.id}>
-                                                <td>{purchase.date}</td>
+                                                <td>{purchase.created_at}</td>
                                                 <td>
                                                     {purchase.supplier.name}
                                                 </td>
                                                 <td>
                                                     {purchase.payment_status ==
-                                                    "Paid" ? (
+                                                    "paid" ? (
                                                         <span className="badge badge-success">
                                                             Paid
                                                         </span>
@@ -88,8 +65,8 @@ const PurchaseList = () => {
                                                         </span>
                                                     )}
                                                 </td>
-                                                <td>{purchase.grand_total}</td>
-                                                <td>{purchase.payment_due}</td>
+                                                <td>{purchase.grandTotal}</td>
+                                                <td>{purchase.dueAmount}</td>
                                                 <td>
                                                     <Link
                                                         type="button"
@@ -128,7 +105,7 @@ const PurchaseList = () => {
                             <div className="py-4">
                                 <nav>
                                     <ul className="pagination justify-content-center">
-                                        {/* {purchases.links.map((link, index) => (
+                                        {purchases.links.map((link, index) => (
                                             <li
                                                 key={index}
                                                 className={`page-item ${
@@ -154,7 +131,7 @@ const PurchaseList = () => {
                                                     />
                                                 )}
                                             </li>
-                                        ))} */}
+                                        ))}
                                     </ul>
                                 </nav>
                             </div>
