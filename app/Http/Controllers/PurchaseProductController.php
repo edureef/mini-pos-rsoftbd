@@ -58,9 +58,10 @@ class PurchaseProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PurchaseProduct $purchaseProduct)
+    public function show($purchase)
     {
-        //
+        $purchase = PurchaseProduct::where('id', $purchase)->with('supplier')->first();
+        return Inertia::render('purchase/PurchaseDetails', compact('purchase'));
     }
 
     /**
