@@ -10,7 +10,8 @@ const PurchaseList = ({ purchases }) => {
     };
 
     const handleDeleteBtn = () => {
-        router.delete(`purchase/${id}`);
+        console.log(purchaseData);
+        // router.delete(`purchase/${purchaseData.id}`);
     };
 
     return (
@@ -89,6 +90,7 @@ const PurchaseList = ({ purchases }) => {
                                                             )
                                                         }
                                                         dataName={
+                                                            "Purchase ID:" +
                                                             purchaseData.id
                                                         }
                                                         handleDeleteBtn={

@@ -83,8 +83,9 @@ class PurchaseProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PurchaseProduct $purchaseProduct)
+    public function destroy(PurchaseProduct $purchase)
     {
-        //
+        $purchase->delete();
+        return redirect()->back();
     }
 }
