@@ -67,17 +67,38 @@ class PurchaseProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PurchaseProduct $purchaseProduct)
+    public function edit(PurchaseProduct $purchase)
     {
-        //
+        $suppliers = Supplier::latest()->paginate(1000);
+        $products = Product::latest()->paginate(1000);
+        $purchase = $purchase->where('id', $purchase->id)->with('supplier')->first();
+        return Inertia::render('purchase/EditPurchase', compact('purchase', 'suppliers', 'products'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PurchaseProduct $purchaseProduct)
+    public function update(Request $request, PurchaseProduct $purchase)
     {
-        //
+        $request->validate([
+            'supplier_id' => 'required',
+            'products' => 'required|array',
+            'discount' => 'required',
+            'paidAmount' => 'required',
+        ]);
+
+        $purchase->update([
+            'supplier_id' => $request->supplier_id,
+            'products' => $request->products,
+            'netTotal' => $request->netTotal,
+            'discount' => $request->discount,
+            'paidAmount' => $request->paidAmount,
+            'dueAmount' => $request->dueAmount,
+            'grandTotal' => $request->grandTotal,
+            'payment_status' => $request->dueAmount > 0 ? 'due' : 'paid',
+        ]);
+
+        return redirect()->route('purchase.index');
     }
 
     /**
