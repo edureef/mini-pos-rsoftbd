@@ -58,9 +58,10 @@ class SalesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Sales $sales)
+    public function show(Sales $sale)
     {
-        //
+        $sale = $sale->with('customer')->find($sale->id);
+        return Inertia::render('sales/SaleDetails', compact('sale'));
     }
 
     /**
