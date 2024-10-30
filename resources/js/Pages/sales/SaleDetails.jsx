@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Head, Link } from "@inertiajs/react";
 import Layout from "../components/Layout";
+import { useReactToPrint } from "react-to-print";
 
 const SaleDetails = ({ sale }) => {
+    const contentRef = useRef(null);
+    const reactToPrintFn = useReactToPrint({
+        contentRef,
+        documentTitle: "Sale",
+    });
+
     return (
         <>
             <Head title="Sale Details" />
@@ -11,17 +18,25 @@ const SaleDetails = ({ sale }) => {
                     <div className="card-body">
                         <div className="d-flex justify-content-between align-items-center">
                             <h4>Sales List</h4>
-                            <Link
-                                className="btn btn-sm btn-primary"
-                                href="/sales"
-                            >
-                                Back
-                            </Link>
+                            <div>
+                                <Link
+                                    className="btn btn-sm btn-primary"
+                                    href="/sales"
+                                >
+                                    Back
+                                </Link>
+                                <button
+                                    onClick={reactToPrintFn}
+                                    className="btn btn-sm btn-primary ms-2"
+                                >
+                                    <i className="fa fa-print"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="card shadow-sm border">
+                <div ref={contentRef} className="card shadow-sm border">
                     <div className="card-body">
                         <div className="row mb-3">
                             <div className="col-md-6">
@@ -44,16 +59,6 @@ const SaleDetails = ({ sale }) => {
                                             </td>
                                             <td>
                                                 <p>{sale.customer.email}</p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <h6>Company Name: </h6>
-                                            </td>
-                                            <td>
-                                                <p>
-                                                    {sale.customer.company_name}
-                                                </p>
                                             </td>
                                         </tr>
                                         <tr>
