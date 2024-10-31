@@ -83,8 +83,9 @@ class SalesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Sales $sales)
+    public function destroy(Sales $sale)
     {
-        //
+        $sale->delete();
+        return redirect()->back();
     }
 }

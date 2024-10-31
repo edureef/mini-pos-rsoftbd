@@ -1,7 +1,20 @@
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import Layout from "../components/Layout";
+import DeleteModal from "./../components/modals/DeleteModal";
+import { useState } from "react";
 
 const SalesList = ({ sales }) => {
+    const [saleData, setSaleData] = useState([]);
+    const openDeleteModal = (data) => {
+        setSaleData(data);
+    };
+
+    const handleDeleteBtn = () => {
+        router.delete(`sales/${saleData.id}`, {
+            preserveScroll: true,
+        });
+    };
+
     return (
         <>
             <Head title="Sales List" />
@@ -69,6 +82,20 @@ const SalesList = ({ sales }) => {
                                                     >
                                                         <i className="fa fa-edit"></i>
                                                     </Link>
+                                                    <DeleteModal
+                                                        openDeleteModal={() =>
+                                                            openDeleteModal(
+                                                                sale
+                                                            )
+                                                        }
+                                                        dataName={
+                                                            "Sale ID: " +
+                                                            saleData.id
+                                                        }
+                                                        handleDeleteBtn={
+                                                            handleDeleteBtn
+                                                        }
+                                                    />
                                                 </td>
                                             </tr>
                                         );
