@@ -67,9 +67,12 @@ class SalesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Sales $sales)
+    public function edit(Sales $sale)
     {
-        //
+        $sale = $sale->with('customer')->find($sale->id);
+        $customers = Customer::latest()->paginate(1000);
+        $products = Product::latest()->paginate(1000);
+        return Inertia::render('sales/EditSale', compact('customers', 'products', 'sale'));
     }
 
     /**
