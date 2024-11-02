@@ -56,17 +56,17 @@ const EditSale = ({ customers, products, sale }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(data);
+        put(`/sales/${sale.id}`);
     };
 
     return (
         <>
-            <Head title="Add Sale" />
+            <Head title="Edit Sale" />
             <Layout>
                 <div className="card mb-3 shadow-sm">
                     <div className="card-body">
                         <div className="d-flex justify-content-between align-items-center">
-                            <h4>Add Sales</h4>
+                            <h4>Edit Sales</h4>
                             <Link
                                 className="btn btn-sm btn-primary"
                                 href="/sales"
@@ -393,7 +393,7 @@ const EditSale = ({ customers, products, sale }) => {
                                                 type="submit"
                                                 disabled={processing}
                                             >
-                                                Save
+                                                Update Sales Details
                                             </button>
                                         </div>
                                     </div>

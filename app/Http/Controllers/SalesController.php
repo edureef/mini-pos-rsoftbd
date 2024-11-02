@@ -80,7 +80,12 @@ class SalesController extends Controller
      */
     public function update(Request $request, Sales $sales)
     {
-        //
+        $request->validate([
+            'customer_id' => 'required',
+            'products' => 'required|array',
+            'discount' => 'required',
+            'paidAmount' => 'required',
+        ]);
     }
 
     /**
