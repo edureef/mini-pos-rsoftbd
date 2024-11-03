@@ -86,7 +86,7 @@ const EditSale = ({ customers, products, sale }) => {
                             <div className="col-md-3">
                                 <select
                                     className="form-select form-select-sm text-dark"
-                                    value={sale.customer_id}
+                                    value={data.customer_id}
                                     onChange={(e) =>
                                         setData("customer_id", e.target.value)
                                     }
