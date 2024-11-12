@@ -78,7 +78,7 @@ class SalesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Sales $sales)
+    public function update(Request $request, Sales $sale)
     {
         $request->validate([
             'customer_id' => 'required',
@@ -86,6 +86,19 @@ class SalesController extends Controller
             'discount' => 'required',
             'paidAmount' => 'required',
         ]);
+
+        $sale->update([
+            'customer_id' => $request->customer_id,
+            'products' => $request->products,
+            'netTotal' => $request->netTotal,
+            'discount' => $request->discount,
+            'paidAmount' => $request->paidAmount,
+            'dueAmount' => $request->dueAmount,
+            'grandTotal' => $request->grandTotal,
+            'payment_status' => $request->dueAmount > 0 ? 'due' : 'paid',
+        ]);
+
+        return redirect()->route('sales.index');
     }
 
     /**
