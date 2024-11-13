@@ -138,9 +138,7 @@ const AddPurchase = ({ suppliers, products }) => {
                                                         (item, index) => (
                                                             <option
                                                                 key={index}
-                                                                value={
-                                                                    item.name
-                                                                }
+                                                                value={item.id}
                                                             >
                                                                 {item.name}
                                                             </option>

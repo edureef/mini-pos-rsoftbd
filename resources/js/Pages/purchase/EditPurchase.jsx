@@ -143,9 +143,7 @@ const EditPurchase = ({ suppliers, products, purchase }) => {
                                                         (prod, idx) => (
                                                             <option
                                                                 key={idx}
-                                                                value={
-                                                                    prod.name
-                                                                }
+                                                                value={prod.id}
                                                             >
                                                                 {prod.name}
                                                             </option>
