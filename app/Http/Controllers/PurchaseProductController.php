@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\PurchaseProduct;
+use App\Models\Stock;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -41,16 +42,24 @@ class PurchaseProductController extends Controller
             'paidAmount' => 'required',
         ]);
 
-        PurchaseProduct::create([
-            'supplier_id' => $request->supplier_id,
-            'products' => $request->products,
-            'netTotal' => $request->netTotal,
-            'discount' => $request->discount,
-            'paidAmount' => $request->paidAmount,
-            'dueAmount' => $request->dueAmount,
-            'grandTotal' => $request->grandTotal,
-            'payment_status' => $request->dueAmount > 0 ? 'due' : 'paid',
-        ]);
+        foreach ($request->products as $key => $value) {
+            Stock::updateOrCreate([
+                'product_id' => $value['productId'],
+            ], [
+                'quantity' => $value['quantity'],
+            ]);
+            // dd($value['productName'], $value['quantity']);
+        }
+        // PurchaseProduct::create([
+        //     'supplier_id' => $request->supplier_id,
+        //     'products' => $request->products,
+        //     'netTotal' => $request->netTotal,
+        //     'discount' => $request->discount,
+        //     'paidAmount' => $request->paidAmount,
+        //     'dueAmount' => $request->dueAmount,
+        //     'grandTotal' => $request->grandTotal,
+        //     'payment_status' => $request->dueAmount > 0 ? 'due' : 'paid',
+        // ]);
 
         return redirect()->route('purchase.index');
     }
