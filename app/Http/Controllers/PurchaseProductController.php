@@ -33,7 +33,7 @@ class PurchaseProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Stock $stock)
     {
         $request->validate([
             'supplier_id' => 'required',
@@ -42,24 +42,24 @@ class PurchaseProductController extends Controller
             'paidAmount' => 'required',
         ]);
 
-        foreach ($request->products as $key => $value) {
-            Stock::updateOrCreate([
-                'product_id' => $value['productId'],
-            ], [
-                'quantity' => $value['quantity'],
+        PurchaseProduct::create([
+            'supplier_id' => $request->supplier_id,
+            'products' => $request->products,
+            'netTotal' => $request->netTotal,
+            'discount' => $request->discount,
+            'paidAmount' => $request->paidAmount,
+            'dueAmount' => $request->dueAmount,
+            'grandTotal' => $request->grandTotal,
+            'payment_status' => $request->dueAmount > 0 ? 'due' : 'paid',
+        ]);
+
+        foreach ($request->products as $value) {
+            $previousStock = Stock::where('product_id', $value['productName'])->first();
+
+            $stock->updateOrCreate(['product_id' => $value['productName']], [
+                'quantity' => $previousStock == null ? $value['quantity'] : $value['quantity'] + $previousStock->quantity,
             ]);
-            // dd($value['productName'], $value['quantity']);
         }
-        // PurchaseProduct::create([
-        //     'supplier_id' => $request->supplier_id,
-        //     'products' => $request->products,
-        //     'netTotal' => $request->netTotal,
-        //     'discount' => $request->discount,
-        //     'paidAmount' => $request->paidAmount,
-        //     'dueAmount' => $request->dueAmount,
-        //     'grandTotal' => $request->grandTotal,
-        //     'payment_status' => $request->dueAmount > 0 ? 'due' : 'paid',
-        // ]);
 
         return redirect()->route('purchase.index');
     }
