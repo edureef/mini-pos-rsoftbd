@@ -138,7 +138,7 @@ const AddSale = ({ customers, products }) => {
                                                             <option
                                                                 key={index}
                                                                 value={
-                                                                    item.name
+                                                                    item.id
                                                                 }
                                                             >
                                                                 {item.name}
