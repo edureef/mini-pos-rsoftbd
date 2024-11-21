@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Sales;
+use App\Models\Stock;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -32,7 +33,7 @@ class SalesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Stock $stock)
     {
         $request->validate([
             'customer_id' => 'required',
@@ -51,6 +52,16 @@ class SalesController extends Controller
             'grandTotal' => $request->grandTotal,
             'payment_status' => $request->dueAmount > 0 ? 'due' : 'paid',
         ]);
+
+        foreach ($request->products as $value) {
+            $previousStock = Stock::where('product_id', $value['productName'])->first();
+
+            if ($previousStock != null) {
+                $stock->updateOrCreate(['product_id' => $value['productName']], [
+                    'quantity' => $previousStock->quantity - $value['quantity'],
+                ]);
+            }
+        }
 
         return redirect()->route('sales.index');
     }
