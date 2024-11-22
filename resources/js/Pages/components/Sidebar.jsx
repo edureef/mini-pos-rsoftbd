@@ -145,13 +145,36 @@ const Sidebar = ({ isOpen }) => {
                     </li>
                     <li
                         className={`nav-item ${
-                            url === "/reports" ? "active" : ""
+                            url.startsWith("/getProductStocks") ? "active" : ""
                         }`}
                     >
-                        <Link className={`nav-link`} href="/">
+                        <a
+                            className="nav-link"
+                            data-bs-toggle="collapse"
+                            href="#report"
+                            aria-expanded="false"
+                            aria-controls="report"
+                        >
                             <i className="fa fa-file-word-o menu-icon"></i>
                             <span className="menu-title">Reports</span>
-                        </Link>
+                            <i className="menu-arrow"></i>
+                        </a>
+                        <div className="collapse" id="report">
+                            <ul className="nav flex-column sub-menu">
+                                <li className="nav-item">
+                                    <Link
+                                        className={`nav-link ${
+                                            url.startsWith("/getProductStocks")
+                                                ? "active"
+                                                : ""
+                                        }`}
+                                        href="/getProductStocks"
+                                    >
+                                        Product Stock Report
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
             </nav>

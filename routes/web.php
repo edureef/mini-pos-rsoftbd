@@ -6,6 +6,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseProductController;
+use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
@@ -29,3 +30,5 @@ Route::get('/group', [GroupController::class, 'index'])->name('group.index');
 Route::post('/group', [GroupController::class, 'store'])->name('group.store');
 Route::put('/group/{group}', [GroupController::class, 'update'])->name('group.update');
 Route::delete('/group/{group}', [GroupController::class, 'destroy'])->name('group.destroy');
+
+Route::get('/getProductStocks', [ReportsController::class, 'productStocks'])->name('getProductStocks');
