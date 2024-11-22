@@ -142,7 +142,7 @@ const EditSale = ({ customers, products, sale }) => {
                                                             <option
                                                                 key={index}
                                                                 value={
-                                                                    item.name
+                                                                    item.id
                                                                 }
                                                             >
                                                                 {item.name}
