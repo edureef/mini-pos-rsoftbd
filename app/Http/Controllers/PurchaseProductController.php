@@ -70,7 +70,8 @@ class PurchaseProductController extends Controller
     public function show($purchase)
     {
         $purchase = PurchaseProduct::where('id', $purchase)->with('supplier')->first();
-        return Inertia::render('purchase/PurchaseDetails', compact('purchase'));
+        $products = Product::latest()->get();
+        return Inertia::render('purchase/PurchaseDetails', compact('purchase', 'products'));
     }
 
     /**

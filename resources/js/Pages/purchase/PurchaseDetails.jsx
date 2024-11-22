@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "./../components/Layout";
 import { Head, Link } from "@inertiajs/react";
 
-const PurchaseDetails = ({ purchase }) => {
+const PurchaseDetails = ({ purchase, products }) => {
     return (
         <>
             <Layout>
@@ -103,11 +103,19 @@ const PurchaseDetails = ({ purchase }) => {
                                         <tbody>
                                             {purchase.products.map(
                                                 (purchase, i) => {
+                                                    let product =
+                                                        products.filter(
+                                                            (product) =>
+                                                                product.id ==
+                                                                purchase.productName
+                                                        );
+
                                                     return (
                                                         <tr key={i}>
                                                             <td>
                                                                 {
-                                                                    purchase.productName
+                                                                    product[0]
+                                                                        .name
                                                                 }
                                                             </td>
                                                             <td>
