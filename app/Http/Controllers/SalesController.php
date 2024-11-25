@@ -72,7 +72,8 @@ class SalesController extends Controller
     public function show(Sales $sale)
     {
         $sale = $sale->with('customer')->find($sale->id);
-        return Inertia::render('sales/SaleDetails', compact('sale'));
+        $products = Product::latest()->get();
+        return Inertia::render('sales/SaleDetails', compact('sale', 'products'));
     }
 
     /**

@@ -3,7 +3,7 @@ import { Head, Link } from "@inertiajs/react";
 import Layout from "../components/Layout";
 import { useReactToPrint } from "react-to-print";
 
-const SaleDetails = ({ sale }) => {
+const SaleDetails = ({ sale, products }) => {
     const contentRef = useRef(null);
     const reactToPrintFn = useReactToPrint({
         contentRef,
@@ -99,10 +99,15 @@ const SaleDetails = ({ sale }) => {
                                         </thead>
                                         <tbody>
                                             {sale.products.map((sale, i) => {
+                                                let product = products.filter(
+                                                    (product) =>
+                                                        product.id ==
+                                                        sale.productName
+                                                );
                                                 return (
                                                     <tr key={i}>
                                                         <td>
-                                                            {sale.productName}
+                                                            {product[0].name}
                                                         </td>
                                                         <td>{sale.unit}</td>
                                                         <td>{sale.price}</td>
