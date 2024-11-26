@@ -98,6 +98,19 @@ const Sidebar = ({ isOpen }) => {
                                     {" "}
                                     <Link
                                         className={`nav-link ${
+                                            url.startsWith("/unit")
+                                                ? "active"
+                                                : ""
+                                        }`}
+                                        href="/unit"
+                                    >
+                                        Unit
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    {" "}
+                                    <Link
+                                        className={`nav-link ${
                                             url.startsWith("/group")
                                                 ? "active"
                                                 : ""

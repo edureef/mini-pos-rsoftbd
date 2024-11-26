@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Group;
 use App\Models\Supplier;
+use App\Models\Unit;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -59,6 +60,13 @@ class DatabaseSeeder extends Seeder
         //         'phone_number' => '01' . fake()->numberBetween(100000000, 999999999),
         //         "company_name" => fake()->company,
         //         "address" => fake()->address,
+        //     ]);
+        // }
+
+        // $product_units = ['kg', 'gm', 'liter', 'ml', 'pcs', 'box'];
+        // for ($i = 0; $i < 6; $i++) {
+        //     Unit::create([
+        //         'name' => fake()->randomElement($product_units)
         //     ]);
         // }
     }

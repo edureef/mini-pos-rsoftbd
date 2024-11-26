@@ -9,6 +9,7 @@ use App\Http\Controllers\PurchaseProductController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,6 +23,7 @@ Route::delete('/category/{category}', [CategoryController::class, 'destroy'])->n
 Route::resource('/customer', CustomerController::class);
 Route::resource('/supplier', SupplierController::class);
 Route::resource('/brand', BrandController::class);
+Route::resource('/unit', UnitController::class);
 Route::resource('/product', ProductController::class);
 Route::resource('/purchase', PurchaseProductController::class);
 Route::resource('/sales', SalesController::class);
