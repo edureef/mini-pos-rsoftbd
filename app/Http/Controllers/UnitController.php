@@ -28,9 +28,15 @@ class UnitController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Unit $unit)
     {
-        //
+        $validtae = $request->validate([
+            'name' => ['required', 'max:50'],
+        ]);
+
+        $unit->create($validtae);
+
+        return redirect()->back();
     }
 
     /**
@@ -54,7 +60,11 @@ class UnitController extends Controller
      */
     public function update(Request $request, Unit $unit)
     {
-        //
+        $validtae = $request->validate([
+            'name' => ['required', 'max:50'],
+        ]);
+        $unit->update($validtae);
+        return redirect()->back();
     }
 
     /**

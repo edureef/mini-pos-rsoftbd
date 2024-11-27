@@ -1,6 +1,14 @@
 import { Head, Link } from "@inertiajs/react";
 import Layout from "./components/Layout";
+import { UnitModal } from "./components/modals/UnitModals";
+import { useState } from "react";
 const Unit = ({ units }) => {
+    const [unitData, setUnitData] = useState({});
+
+    const openEditModal = (unit) => {
+        setUnitData(unit);
+    };
+
     return (
         <>
             <Head title="Unit" />
@@ -9,6 +17,7 @@ const Unit = ({ units }) => {
                     <div className="card-body">
                         <div className="d-flex justify-content-between align-items-center">
                             <h4>Unit Page</h4>
+                            <UnitModal />
                         </div>
                     </div>
                 </div>
@@ -30,6 +39,15 @@ const Unit = ({ units }) => {
                                             <tr key={unit.id}>
                                                 <td>{index + 1}</td>
                                                 <td>{unit.name}</td>
+                                                <td>
+                                                    <UnitModal
+                                                        isEdit={true}
+                                                        unitData={unitData}
+                                                        openEditModal={() =>
+                                                            openEditModal(unit)
+                                                        }
+                                                    />
+                                                </td>
                                             </tr>
                                         );
                                     })}
