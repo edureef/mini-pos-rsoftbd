@@ -1,9 +1,14 @@
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import Layout from "./components/Layout";
 import { UnitModal } from "./components/modals/UnitModals";
+import DeleteModal from "./components/modals/DeleteModal";
 import { useState } from "react";
 const Unit = ({ units }) => {
     const [unitData, setUnitData] = useState({});
+
+    const openDeleteModal = (unit) => {
+        setUnitData(unit);
+    };
 
     const openEditModal = (unit) => {
         setUnitData(unit);
@@ -45,6 +50,19 @@ const Unit = ({ units }) => {
                                                         unitData={unitData}
                                                         openEditModal={() =>
                                                             openEditModal(unit)
+                                                        }
+                                                    />
+                                                    <DeleteModal
+                                                        openDeleteModal={() =>
+                                                            openDeleteModal(
+                                                                unit
+                                                            )
+                                                        }
+                                                        dataName={unitData.name}
+                                                        handleDeleteBtn={() =>
+                                                            router.delete(
+                                                                `unit/${unitData.id}`
+                                                            )
                                                         }
                                                     />
                                                 </td>
