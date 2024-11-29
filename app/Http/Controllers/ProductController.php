@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Group;
 use App\Models\Product;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -28,7 +29,8 @@ class ProductController extends Controller
         $brands = Brand::latest()->paginate(1000);
         $categorys = Category::latest()->paginate(1000);
         $groups = Group::latest()->paginate(1000);
-        return Inertia::render('product/AddProduct', compact('brands', 'categorys', 'groups'));
+        $units = Unit::latest()->get();
+        return Inertia::render('product/AddProduct', compact('brands', 'categorys', 'groups', 'units'));
     }
 
     /**
@@ -68,7 +70,8 @@ class ProductController extends Controller
         $brands = Brand::latest()->paginate(1000);
         $categorys = Category::latest()->paginate(1000);
         $groups = Group::latest()->paginate(1000);
-        return Inertia::render('product/EditProduct', compact('products', 'brands', 'categorys', 'groups'));
+        $units = Unit::latest()->get();
+        return Inertia::render('product/EditProduct', compact('products', 'brands', 'categorys', 'groups','units'));
     }
 
     /**

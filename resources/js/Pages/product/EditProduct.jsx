@@ -1,7 +1,7 @@
 import { Head, Link, useForm } from "@inertiajs/react";
 import Layout from "../components/Layout";
 
-const EditProduct = ({ products, brands, categorys, groups }) => {
+const EditProduct = ({ products, brands, categorys, groups, units }) => {
     const { data, setData, put, processing, errors, reset } = useForm({
         name: products.name,
         description: products.description,
@@ -166,8 +166,16 @@ const EditProduct = ({ products, brands, categorys, groups }) => {
                                         }
                                     >
                                         <option value="">Select a unit</option>
-                                        <option value="kg">KG</option>
-                                        <option value="pcs">PCS</option>
+                                        {units.map((unit) => {
+                                            return (
+                                                <option
+                                                    key={unit.id}
+                                                    value={unit.name}
+                                                >
+                                                    {unit.name}
+                                                </option>
+                                            );
+                                        })}
                                     </select>
                                     {errors.unit && (
                                         <p className="invalid-feedback">
