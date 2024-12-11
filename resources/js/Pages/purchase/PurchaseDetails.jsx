@@ -1,27 +1,42 @@
-import React from "react";
+import { useRef } from "react";
 import Layout from "./../components/Layout";
 import { Head, Link } from "@inertiajs/react";
+import { useReactToPrint } from "react-to-print";
 
 const PurchaseDetails = ({ purchase, products }) => {
+    const contentRef = useRef(null);
+    const reactToPrintFn = useReactToPrint({
+        contentRef,
+        documentTitle: "Purchase",
+    });
+
     return (
         <>
+            <Head title="Purchase Details" />
             <Layout>
-                <Head title="Purchase Details" />
                 <div className="card mb-3 shadow-sm border">
                     <div className="card-body">
                         <div className="d-flex justify-content-between align-items-center">
                             <h4>Purchase Details</h4>
-                            <Link
-                                className="btn btn-sm btn-primary"
-                                href="/purchase"
-                            >
-                                Back
-                            </Link>
+                            <div>
+                                <Link
+                                    className="btn btn-sm btn-primary"
+                                    href="/purchase"
+                                >
+                                    Back
+                                </Link>
+                                <button
+                                    onClick={reactToPrintFn}
+                                    className="btn btn-sm btn-primary ms-2"
+                                >
+                                    <i className="fa fa-print"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="card shadow-sm border">
+                <div ref={contentRef} className="card shadow-sm border">
                     <div className="card-body">
                         <div className="row mb-3">
                             <div className="col-md-6">
