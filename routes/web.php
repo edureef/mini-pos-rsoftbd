@@ -15,6 +15,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return inertia('Dashbord');
 });
+
+Route::get('/login', function () {
+    return inertia('auth/Login');
+});
+Route::get('/signup', function () {
+    return inertia('auth/SignUp');
+});
+
 Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
 Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
 Route::put('/category/{category}', [CategoryController::class, 'update'])->name('category.update');

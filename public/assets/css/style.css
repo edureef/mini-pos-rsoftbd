@@ -2,7 +2,7 @@
 /*------------------------------------------------------------------
  [Master Stylesheet]
 
-  Project:	Star Admin2 
+  Project:	Star Admin2
   Version:	1.2.1
 -------------------------------------------------------------------*/
 /*-------------------------------------------------------------------
@@ -28389,10 +28389,10 @@ dl li {
   }
 }
 .auth .brand-logo {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 .auth .brand-logo img {
-  width: 90px;
+  width: 120px;
 }
 .auth form .form-group {
   margin-bottom: 1.5rem;
