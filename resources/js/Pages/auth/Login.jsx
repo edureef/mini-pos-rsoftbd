@@ -1,59 +1,101 @@
+import { Link, useForm } from "@inertiajs/react";
+
 const Login = () => {
+    const { data, setData, post, processing, errors } = useForm({
+        email: "",
+        password: "",
+    });
+
+    const handleOnSubmit = (e) => {
+        e.preventDefault();
+        post("/login", data);
+    };
     return (
         <>
-            <div class="container-scroller">
-                <div class="container-fluid page-body-wrapper full-page-wrapper">
-                    <div class="content-wrapper d-flex align-items-center auth px-0">
-                        <div class="row w-100 mx-0">
-                            <div class="col-lg-4 mx-auto">
-                                <div class="auth-form-light shadow rounded-3 text-center py-3 px-4 px-sm-5">
-                                    <div class="brand-logo">
+            <div className="container-scroller">
+                <div className="container-fluid page-body-wrapper full-page-wrapper">
+                    <div className="content-wrapper d-flex align-items-center auth px-0">
+                        <div className="row w-100 mx-0">
+                            <div className="col-lg-4 mx-auto">
+                                <div className="auth-form-light shadow rounded-3 py-3 px-4 px-sm-5">
+                                    <div className="brand-logo text-center">
                                         <img
                                             src="assets/images/nav-logo.svg"
                                             alt="logo"
                                         />
                                     </div>
-                                    <form>
-                                        <div class="form-group">
+                                    <form onSubmit={handleOnSubmit}>
+                                        <div className="form-group">
                                             <input
                                                 type="email"
-                                                class="form-control form-control-sm"
-                                                placeholder="Username"
+                                                className={`form-control rounded form-control-sm ${
+                                                    errors.email
+                                                        ? "is-invalid mb-1"
+                                                        : ""
+                                                }`}
+                                                placeholder="Email"
+                                                onChange={(e) =>
+                                                    setData(
+                                                        "email",
+                                                        e.target.value
+                                                    )
+                                                }
                                             />
+                                            {errors.email && (
+                                                <p className="invalid-feedback">
+                                                    {errors.email}
+                                                </p>
+                                            )}
                                         </div>
-                                        <div class="form-group">
+                                        <div className="form-group">
                                             <input
                                                 type="password"
-                                                class="form-control form-control-sm"
+                                                className={`form-control rounded form-control-sm ${
+                                                    errors.password
+                                                        ? "is-invalid mb-1"
+                                                        : ""
+                                                }`}
                                                 placeholder="Password"
+                                                onChange={(e) =>
+                                                    setData(
+                                                        "password",
+                                                        e.target.value
+                                                    )
+                                                }
                                             />
+                                            {errors.password && (
+                                                <p className="invalid-feedback">
+                                                    {errors.password}
+                                                </p>
+                                            )}
                                         </div>
-                                        <div class="mt-3 d-grid gap-2">
-                                            <a
-                                                class="btn btn-sm btn-block btn-primary btn-lg fw-medium auth-form-btn"
-                                                href="../../index.html"
+                                        <div className="mt-3 d-grid gap-2">
+                                            <button
+                                                className="btn btn-block btn-primary btn-sm fw-medium auth-form-btn"
+                                                type="submit"
+                                                disabled={processing}
                                             >
                                                 SIGN IN
-                                            </a>
+                                            </button>
                                         </div>
-                                        <div class="my-2 d-flex justify-content-end align-items-center">
-                                            <a
+                                        <div className="my-2 d-flex justify-content-end align-items-center">
+                                            <Link
                                                 href="#"
-                                                class="auth-link text-black"
+                                                className="auth-link text-black"
                                             >
                                                 Forgot password?
-                                            </a>
+                                            </Link>
                                         </div>
 
-                                        <div class="text-center mt-4 fw-light">
+                                        <div className="text-center mt-4 fw-light">
                                             {" "}
                                             Don't have an account?{" "}
-                                            <a
-                                                href="/signup"
-                                                class="text-primary"
+                                            <Link
+                                                href="/register"
+                                                className="text-primary"
                                             >
                                                 Create
-                                            </a>
+                                            </Link>
                                         </div>
                                     </form>
                                 </div>
