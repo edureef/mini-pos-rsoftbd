@@ -189,6 +189,21 @@ const Sidebar = ({ isOpen }) => {
                             </ul>
                         </div>
                     </li>
+                    <li
+                        className={`nav-item ${
+                            url.startsWith("/users") ? "active" : ""
+                        }`}
+                    >
+                        <Link
+                            className={`nav-link ${
+                                url.startsWith("/users") ? "active" : ""
+                            }`}
+                            href="/users"
+                        >
+                            <i className="fa fa-user-o menu-icon"></i>
+                            <span className="menu-title">Users</span>
+                        </Link>
+                    </li>
                 </ul>
             </nav>
         </>
