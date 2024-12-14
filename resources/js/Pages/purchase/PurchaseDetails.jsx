@@ -29,7 +29,11 @@ const PurchaseDetails = ({ purchase, products }) => {
                                     onClick={reactToPrintFn}
                                     className="btn btn-sm btn-primary ms-2"
                                 >
-                                    <i className="fa fa-print"></i>
+                                    <i
+                                        className="icon-printer me-1"
+                                        style={{ fontSize: "12px" }}
+                                    ></i>
+                                    Print
                                 </button>
                             </div>
                         </div>
