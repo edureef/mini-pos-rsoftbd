@@ -13,7 +13,7 @@ use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['admin'])->group(function () {
     Route::get('/', function () {
         return inertia('Dashbord');
     });
@@ -39,4 +39,11 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/group/{group}', [GroupController::class, 'destroy'])->name('group.destroy');
 
     Route::get('/getProductStocks', [ReportsController::class, 'productStocks'])->name('getProductStocks');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/', function () {
+        return inertia('Dashbord');
+    });
+    Route::resource('/sales', SalesController::class);
 });

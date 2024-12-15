@@ -1,6 +1,7 @@
 import { Link, usePage } from "@inertiajs/react";
 import Sidebar from "./Sidebar";
 import { useState } from "react";
+import StuffSidebar from "./StuffSidebar";
 
 const Layout = ({ children }) => {
     const { auth } = usePage().props;
@@ -99,7 +100,11 @@ const Layout = ({ children }) => {
                     </div>
                 </nav>
                 <div className="container-fluid page-body-wrapper mt-2">
-                    <Sidebar isOpen={isOpen} />
+                    {auth.user.role === "admin" ? (
+                        <Sidebar isOpen={isOpen} />
+                    ) : (
+                        <StuffSidebar isOpen={isOpen} />
+                    )}
                     <div className="main-panel">
                         <div className="content-wrapper">{children}</div>
                     </div>
