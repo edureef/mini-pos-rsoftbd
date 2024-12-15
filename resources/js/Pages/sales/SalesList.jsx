@@ -44,6 +44,7 @@ const SalesList = ({ sales }) => {
                                         <th>Payment Status</th>
                                         <th>Grand Total</th>
                                         <th>Payment Due</th>
+                                        <th>Sales By</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -67,6 +68,7 @@ const SalesList = ({ sales }) => {
                                                 </td>
                                                 <td>{sale.grandTotal}</td>
                                                 <td>{sale.dueAmount}</td>
+                                                <td>{sale.user.name}</td>
                                                 <td>
                                                     <Link
                                                         type="button"

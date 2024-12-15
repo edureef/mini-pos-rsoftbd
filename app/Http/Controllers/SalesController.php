@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Sales;
 use App\Models\Stock;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class SalesController extends Controller
@@ -16,7 +17,11 @@ class SalesController extends Controller
      */
     public function index()
     {
-        $sales = Sales::with('customer')->latest()->paginate(10);
+        if (Auth::user()->role == 'admin') {
+            $sales = Sales::with('customer', 'user')->latest()->paginate(10);
+        } else {
+            $sales = Sales::with('customer', 'user')->where('user_id', Auth::user()->id)->latest()->paginate(10);
+        }
         return Inertia::render('sales/SalesList', compact('sales'));
     }
 
@@ -44,6 +49,7 @@ class SalesController extends Controller
 
         Sales::create([
             'customer_id' => $request->customer_id,
+            'user_id' => Auth::user()->id,
             'products' => $request->products,
             'netTotal' => $request->netTotal,
             'discount' => $request->discount,
@@ -101,6 +107,7 @@ class SalesController extends Controller
 
         $sale->update([
             'customer_id' => $request->customer_id,
+            'user_id' => Auth::user()->id,
             'products' => $request->products,
             'netTotal' => $request->netTotal,
             'discount' => $request->discount,
