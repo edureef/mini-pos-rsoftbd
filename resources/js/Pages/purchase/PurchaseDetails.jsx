@@ -126,7 +126,7 @@ const PurchaseDetails = ({ purchase, products }) => {
                                                         products.filter(
                                                             (product) =>
                                                                 product.id ==
-                                                                purchase.productName
+                                                                purchase.productId
                                                         );
 
                                                     return (

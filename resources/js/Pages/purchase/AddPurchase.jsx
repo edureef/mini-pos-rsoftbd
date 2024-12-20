@@ -126,7 +126,7 @@ const AddPurchase = ({ suppliers, products }) => {
                                             <td>
                                                 <select
                                                     className="form-select form-select-sm text-dark"
-                                                    name="productName"
+                                                    name="productId"
                                                     onChange={(e) =>
                                                         handleChange(index, e)
                                                     }

@@ -54,9 +54,9 @@ class PurchaseProductController extends Controller
         ]);
 
         foreach ($request->products as $value) {
-            $previousStock = Stock::where('product_id', $value['productName'])->first();
+            $previousStock = Stock::where('product_id', $value['productId'])->first();
 
-            $stock->updateOrCreate(['product_id' => $value['productName']], [
+            $stock->updateOrCreate(['product_id' => $value['productId']], [
                 'quantity' => $previousStock == null ? $value['quantity'] : $value['quantity'] + $previousStock->quantity,
             ]);
         }
