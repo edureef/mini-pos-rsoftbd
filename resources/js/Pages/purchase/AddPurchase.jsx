@@ -1,10 +1,11 @@
 import { Head, Link, useForm } from "@inertiajs/react";
 import Layout from "../components/Layout";
 
-const AddPurchase = ({ suppliers, products }) => {
+const AddPurchase = ({ suppliers, products, units }) => {
     const { data, setData, post, processing, errors } = useForm({
         supplier_id: "",
         products: [],
+        units: [],
         netTotal: "",
         discount: "",
         paidAmount: "",
@@ -157,22 +158,18 @@ const AddPurchase = ({ suppliers, products }) => {
                                                     }
                                                 />
                                                 <datalist id="units">
-                                                    <option value="kg" />
-                                                    <option value="ltr" />
-                                                    <option value="pcs" />
-                                                    <option value="ml" />
-                                                    <option value="gm" />
-                                                    <option value="dozen" />
-                                                    <option value="pack" />
-                                                    <option value="box" />
-                                                    <option value="bottle" />
-                                                    <option value="jar" />
-                                                    <option value="roll" />
-                                                    <option value="packet" />
-                                                    <option value="bag" />
-                                                    <option value="unit" />
-                                                    <option value="litre" />
-                                                    <option value="meter" />
+                                                    {units.map(
+                                                        (item, index) => (
+                                                            <option
+                                                                key={index}
+                                                                value={
+                                                                    item.name
+                                                                }
+                                                            >
+                                                                {item.name}
+                                                            </option>
+                                                        )
+                                                    )}
                                                 </datalist>
                                             </td>
                                             <td>

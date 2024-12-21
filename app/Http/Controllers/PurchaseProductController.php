@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\PurchaseProduct;
 use App\Models\Stock;
 use App\Models\Supplier;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -27,7 +28,8 @@ class PurchaseProductController extends Controller
     {
         $suppliers = Supplier::latest()->paginate(1000);
         $products = Product::latest()->paginate(1000);
-        return Inertia::render('purchase/AddPurchase', compact('suppliers', 'products'));
+        $units = Unit::latest()->get();
+        return Inertia::render('purchase/AddPurchase', compact('suppliers', 'products', 'units'));
     }
 
     /**
