@@ -13,4 +13,10 @@ class ReportsController extends Controller
         $stockData = Stock::with('product')->latest()->paginate(10);
         return Inertia::render('reports/ProductStockReport', compact('stockData'));
     }
+
+    public function deleteStock(Request $request, Stock $stock)
+    {
+        $stock->where('id', $request->id)->delete();
+        return redirect()->back();
+    }
 }

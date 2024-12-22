@@ -39,6 +39,7 @@ Route::middleware(['admin'])->group(function () {
     Route::delete('/group/{group}', [GroupController::class, 'destroy'])->name('group.destroy');
 
     Route::get('/getProductStocks', [ReportsController::class, 'productStocks'])->name('getProductStocks');
+    Route::delete('/deleteProductStocks/{id}', [ReportsController::class, 'deleteStock'])->name('deleteProductStocks');
 });
 
 Route::middleware('auth')->group(function () {

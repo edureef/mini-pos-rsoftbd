@@ -1,8 +1,19 @@
-import { Head, Link } from "@inertiajs/react";
+import { useState } from "react";
+import { Head, Link, router } from "@inertiajs/react";
 import Layout from "../components/Layout";
+import DeleteModal from "../components/modals/DeleteModal";
 import Barcode from "react-barcode";
 
 const ProductStockReport = ({ stockData }) => {
+    const [selectedProduct, setSelectedProduct] = useState(null);
+
+    const openDeleteModal = (product) => {
+        setSelectedProduct(product);
+    };
+
+    const handleDeleteBtn = () => {
+        router.delete(`deleteProductStocks/${selectedProduct.id}`);
+    };
     return (
         <>
             <Head title="Stock Reports" />
@@ -25,6 +36,7 @@ const ProductStockReport = ({ stockData }) => {
                                         <th>Barcode</th>
                                         <th>Unit</th>
                                         <th>Stock</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -44,6 +56,21 @@ const ProductStockReport = ({ stockData }) => {
                                                 </td>
                                                 <td>{stock.product.unit}</td>
                                                 <td>{stock.quantity}</td>
+                                                <td>
+                                                    <DeleteModal
+                                                        openDeleteModal={() =>
+                                                            openDeleteModal(
+                                                                stock
+                                                            )
+                                                        }
+                                                        dataName={
+                                                            stock.product.name
+                                                        }
+                                                        handleDeleteBtn={
+                                                            handleDeleteBtn
+                                                        }
+                                                    />
+                                                </td>
                                             </tr>
                                         );
                                     })}
