@@ -5,7 +5,6 @@ const AddPurchase = ({ suppliers, products, units }) => {
     const { data, setData, post, processing, errors } = useForm({
         supplier_id: "",
         products: [],
-        units: [],
         netTotal: "",
         discount: "",
         paidAmount: "",
@@ -165,9 +164,7 @@ const AddPurchase = ({ suppliers, products, units }) => {
                                                                 value={
                                                                     item.name
                                                                 }
-                                                            >
-                                                                {item.name}
-                                                            </option>
+                                                            />
                                                         )
                                                     )}
                                                 </datalist>

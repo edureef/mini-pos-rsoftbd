@@ -1,7 +1,7 @@
 import { Head, Link, useForm } from "@inertiajs/react";
 import Layout from "../components/Layout";
 
-const EditPurchase = ({ suppliers, products, purchase }) => {
+const EditPurchase = ({ suppliers, products, purchase, units }) => {
     const { data, setData, put, processing, errors } = useForm({
         supplier_id: purchase.supplier_id,
         products: [...purchase.products],
@@ -163,22 +163,16 @@ const EditPurchase = ({ suppliers, products, purchase }) => {
                                                     }
                                                 />
                                                 <datalist id="units">
-                                                    <option value="kg" />
-                                                    <option value="ltr" />
-                                                    <option value="pcs" />
-                                                    <option value="ml" />
-                                                    <option value="gm" />
-                                                    <option value="dozen" />
-                                                    <option value="pack" />
-                                                    <option value="box" />
-                                                    <option value="bottle" />
-                                                    <option value="jar" />
-                                                    <option value="roll" />
-                                                    <option value="packet" />
-                                                    <option value="bag" />
-                                                    <option value="unit" />
-                                                    <option value="litre" />
-                                                    <option value="meter" />
+                                                    {units.map(
+                                                        (item, index) => (
+                                                            <option
+                                                                key={index}
+                                                                value={
+                                                                    item.name
+                                                                }
+                                                            />
+                                                        )
+                                                    )}
                                                 </datalist>
                                             </td>
                                             <td>

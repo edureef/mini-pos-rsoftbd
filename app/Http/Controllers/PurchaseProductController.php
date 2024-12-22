@@ -84,7 +84,8 @@ class PurchaseProductController extends Controller
         $suppliers = Supplier::latest()->paginate(1000);
         $products = Product::latest()->paginate(1000);
         $purchase = $purchase->where('id', $purchase->id)->with('supplier')->first();
-        return Inertia::render('purchase/EditPurchase', compact('purchase', 'suppliers', 'products'));
+        $units = Unit::latest()->get();
+        return Inertia::render('purchase/EditPurchase', compact('purchase', 'suppliers', 'products', 'units'));
     }
 
     /**
