@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Sales;
 use App\Models\Stock;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -32,7 +33,8 @@ class SalesController extends Controller
     {
         $customers = Customer::latest()->paginate(1000);
         $products = Product::latest()->paginate(1000);
-        return Inertia::render('sales/AddSale', compact('customers', 'products'));
+        $units = Unit::latest()->get();
+        return Inertia::render('sales/AddSale', compact('customers', 'products', 'units'));
     }
 
     /**
@@ -47,6 +49,22 @@ class SalesController extends Controller
             'paidAmount' => 'required',
         ]);
 
+        foreach ($request->products as $value) {
+            $previousStock = Stock::with('product')->where('product_id', $value['productName'])->first();
+
+            if ($value['quantity'] <= 0) {
+                return redirect()->back()->with(['error' => 'Quantity must be greater than 0']);
+            }
+
+            if ($previousStock != null && $previousStock->quantity >= $value['quantity']) {
+                $stock->updateOrCreate(['product_id' => $value['productName']], [
+                    'quantity' => $previousStock->quantity - $value['quantity'],
+                ]);
+            } else {
+                return redirect()->back()->with(['error' => 'Insufficient stock for product: ' . $previousStock->product->name]);
+            }
+        }
+
         Sales::create([
             'customer_id' => $request->customer_id,
             'user_id' => Auth::user()->id,
@@ -58,16 +76,6 @@ class SalesController extends Controller
             'grandTotal' => $request->grandTotal,
             'payment_status' => $request->dueAmount > 0 ? 'due' : 'paid',
         ]);
-
-        foreach ($request->products as $value) {
-            $previousStock = Stock::where('product_id', $value['productName'])->first();
-
-            if ($previousStock != null) {
-                $stock->updateOrCreate(['product_id' => $value['productName']], [
-                    'quantity' => $previousStock->quantity - $value['quantity'],
-                ]);
-            }
-        }
 
         return redirect()->route('sales.index');
     }
@@ -90,7 +98,8 @@ class SalesController extends Controller
         $sale = $sale->with('customer')->find($sale->id);
         $customers = Customer::latest()->paginate(1000);
         $products = Product::latest()->paginate(1000);
-        return Inertia::render('sales/EditSale', compact('customers', 'products', 'sale'));
+        $units = Unit::latest()->get();
+        return Inertia::render('sales/EditSale', compact('customers', 'products', 'sale', 'units'));
     }
 
     /**

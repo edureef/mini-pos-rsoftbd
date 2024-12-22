@@ -1,7 +1,7 @@
 import { Head, Link, useForm } from "@inertiajs/react";
 import Layout from "../components/Layout";
 
-const EditSale = ({ customers, products, sale }) => {
+const EditSale = ({ customers, products, sale, units }) => {
     const { data, setData, put, processing, errors } = useForm({
         customer_id: sale.customer_id,
         products: [...sale.products],
@@ -141,9 +141,7 @@ const EditSale = ({ customers, products, sale }) => {
                                                         (item, index) => (
                                                             <option
                                                                 key={index}
-                                                                value={
-                                                                    item.id
-                                                                }
+                                                                value={item.id}
                                                             >
                                                                 {item.name}
                                                             </option>
@@ -163,22 +161,16 @@ const EditSale = ({ customers, products, sale }) => {
                                                     }
                                                 />
                                                 <datalist id="units">
-                                                    <option value="kg" />
-                                                    <option value="ltr" />
-                                                    <option value="pcs" />
-                                                    <option value="ml" />
-                                                    <option value="gm" />
-                                                    <option value="dozen" />
-                                                    <option value="pack" />
-                                                    <option value="box" />
-                                                    <option value="bottle" />
-                                                    <option value="jar" />
-                                                    <option value="roll" />
-                                                    <option value="packet" />
-                                                    <option value="bag" />
-                                                    <option value="unit" />
-                                                    <option value="litre" />
-                                                    <option value="meter" />
+                                                    {units.map(
+                                                        (item, index) => (
+                                                            <option
+                                                                key={index}
+                                                                value={
+                                                                    item.name
+                                                                }
+                                                            />
+                                                        )
+                                                    )}
                                                 </datalist>
                                             </td>
                                             <td>
