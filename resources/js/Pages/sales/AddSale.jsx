@@ -1,8 +1,7 @@
-import { Head, Link, useForm, usePage } from "@inertiajs/react";
+import { Head, Link, useForm } from "@inertiajs/react";
 import Layout from "../components/Layout";
 
 const AddSale = ({ customers, products, units }) => {
-    const { flash } = usePage().props;
     const { data, setData, post, processing, errors } = useForm({
         customer_id: "",
         products: [],
@@ -61,9 +60,6 @@ const AddSale = ({ customers, products, units }) => {
         <>
             <Head title="Add Sale" />
             <Layout>
-                {flash.error && (
-                    <div className="alert alert-danger">{flash.error}</div>
-                )}
                 <div className="card mb-3 shadow-sm">
                     <div className="card-body">
                         <div className="d-flex justify-content-between align-items-center">

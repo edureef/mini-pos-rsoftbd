@@ -44,6 +44,16 @@ class PurchaseProductController extends Controller
             'paidAmount' => 'required',
         ]);
 
+        foreach ($request->products as $value) {
+            if ($value['quantity'] <= 0) {
+                return redirect()->back()->with(['error' => 'Quantity must be positive number']);
+            }
+            $previousStock = Stock::where('product_id', $value['productId'])->first();
+            $stock->updateOrCreate(['product_id' => $value['productId']], [
+                'quantity' => $previousStock == null ? $value['quantity'] : $value['quantity'] + $previousStock->quantity,
+            ]);
+        }
+
         PurchaseProduct::create([
             'supplier_id' => $request->supplier_id,
             'products' => $request->products,
@@ -54,14 +64,6 @@ class PurchaseProductController extends Controller
             'grandTotal' => $request->grandTotal,
             'payment_status' => $request->dueAmount > 0 ? 'due' : 'paid',
         ]);
-
-        foreach ($request->products as $value) {
-            $previousStock = Stock::where('product_id', $value['productId'])->first();
-
-            $stock->updateOrCreate(['product_id' => $value['productId']], [
-                'quantity' => $previousStock == null ? $value['quantity'] : $value['quantity'] + $previousStock->quantity,
-            ]);
-        }
 
         return redirect()->route('purchase.index');
     }

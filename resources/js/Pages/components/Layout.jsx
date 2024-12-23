@@ -4,7 +4,7 @@ import { useState } from "react";
 import StuffSidebar from "./StuffSidebar";
 
 const Layout = ({ children }) => {
-    const { auth } = usePage().props;
+    const { auth, flash } = usePage().props;
     const [isOpen, setIsopen] = useState(false);
     const menuToggle = () => {
         setIsopen(!isOpen);
@@ -106,7 +106,19 @@ const Layout = ({ children }) => {
                         <StuffSidebar isOpen={isOpen} />
                     )}
                     <div className="main-panel">
-                        <div className="content-wrapper">{children}</div>
+                        <div className="content-wrapper">
+                            {flash.success && (
+                                <div className="alert alert-success">
+                                    {flash.success}
+                                </div>
+                            )}
+                            {flash.error && (
+                                <div className="alert alert-danger">
+                                    {flash.error}
+                                </div>
+                            )}
+                            {children}
+                        </div>
                     </div>
                 </div>
             </div>
