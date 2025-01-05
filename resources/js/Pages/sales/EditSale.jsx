@@ -128,8 +128,8 @@ const EditSale = ({ customers, products, sale, units }) => {
                                             <td>
                                                 <select
                                                     className="form-select form-select-sm text-dark"
-                                                    name="productName"
-                                                    value={item.productName}
+                                                    name="productId"
+                                                    value={item.productId}
                                                     onChange={(e) =>
                                                         handleChange(index, e)
                                                     }

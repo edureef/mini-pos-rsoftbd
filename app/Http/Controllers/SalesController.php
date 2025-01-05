@@ -50,14 +50,18 @@ class SalesController extends Controller
         ]);
 
         foreach ($request->products as $value) {
-            $previousStock = Stock::with('product')->where('product_id', $value['productName'])->first();
+            $previousStock = Stock::with('product')->where('product_id', $value['productId'])->first();
+
+            if ($previousStock == null) {
+                return redirect()->back()->with(['error' => 'Product not found in stock database.']);
+            }
 
             if ($value['quantity'] <= 0) {
-                return redirect()->back()->with(['error' => 'Quantity must be greater than 0']);
+                return redirect()->back()->with(['error' => 'Quantity must be positive number']);
             }
 
             if ($previousStock != null && $previousStock->quantity >= $value['quantity']) {
-                $stock->updateOrCreate(['product_id' => $value['productName']], [
+                $stock->updateOrCreate(['product_id' => $value['productId']], [
                     'quantity' => $previousStock->quantity - $value['quantity'],
                 ]);
             } else {
