@@ -32,9 +32,9 @@ class CustomerController extends Controller
     {
         $validtae = $request->validate([
             'name' => ['required', 'max:50'],
-            'email' => ['required', 'email'],
-            'phone_number' => ['required'],
-            'address' => ['required'],
+            'email' => ['unique:customers'],
+            'phone_number' => ['required', 'regex:/^\d{11,11}$/'],
+            'address' => ['max:255'],
         ]);
 
         $customer->create($validtae);
@@ -65,9 +65,9 @@ class CustomerController extends Controller
     {
         $validtae = $request->validate([
             'name' => ['required', 'max:50'],
-            'email' => ['required', 'email'],
-            'phone_number' => ['required'],
-            'address' => ['required'],
+            'email' => [''],
+            'phone_number' => ['required', 'min:11', 'max:11'],
+            'address' => ['max:255'],
         ]);
 
         $customer->update($validtae);

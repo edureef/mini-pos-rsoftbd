@@ -19,11 +19,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // User::factory(20)->create();
 
         // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
+        //     'name' => 'Admin',
+        //     'email' => 'admin@admin.com',
         // ]);
 
         // for ($i = 0; $i < 100000; $i++) {
@@ -44,12 +44,10 @@ class DatabaseSeeder extends Seeder
         //     ]);
         // }
 
-        // for ($i = 0; $i < 100000; $i++) {
-        //     Customer::create([
-        //         'name' => fake()->name,
-        //         'email' => fake()->email,
-        //         'phone_number' => '01' . fake()->numberBetween(100000000, 999999999),
-        //         "address" => fake()->address,
+        // $product_units = ['kg', 'gm', 'liter', 'ml', 'pcs', 'box'];
+        // for ($i = 0; $i < 6; $i++) {
+        //     Unit::create([
+        //         'name' => fake()->randomElement($product_units)
         //     ]);
         // }
 
@@ -63,10 +61,12 @@ class DatabaseSeeder extends Seeder
         //     ]);
         // }
 
-        // $product_units = ['kg', 'gm', 'liter', 'ml', 'pcs', 'box'];
-        // for ($i = 0; $i < 6; $i++) {
-        //     Unit::create([
-        //         'name' => fake()->randomElement($product_units)
+        // for ($i = 0; $i < 100000; $i++) {
+        //     Customer::create([
+        //         'name' => fake()->name,
+        //         'email' => fake()->email,
+        //         'phone_number' => '01' . fake()->numberBetween(100000000, 999999999),
+        //         "address" => fake()->address,
         //     ]);
         // }
     }
