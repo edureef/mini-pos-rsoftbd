@@ -46,5 +46,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/', function () {
         return inertia('Dashbord');
     });
+    Route::resource('/customer', CustomerController::class);
     Route::resource('/sales', SalesController::class);
 });

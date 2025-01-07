@@ -18,6 +18,21 @@ const StuffSidebar = ({ isOpen }) => {
                     </li>
                     <li
                         className={`nav-item ${
+                            url.startsWith("/customer") ? "active" : ""
+                        }`}
+                    >
+                        <Link
+                            className={`nav-link ${
+                                url.startsWith("/customer") ? "active" : ""
+                            }`}
+                            href="/customer"
+                        >
+                            <i className="fa fa-user-o menu-icon"></i>
+                            <span className="menu-title">Customer</span>
+                        </Link>
+                    </li>
+                    <li
+                        className={`nav-item ${
                             url.startsWith("/sales") ? "active" : ""
                         }`}
                     >
