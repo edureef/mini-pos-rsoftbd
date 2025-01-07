@@ -53,7 +53,7 @@ const UserList = ({ users }) => {
                                                 <td>{index + 1}</td>
                                                 <td>{user.name}</td>
                                                 <td>{user.email}</td>
-                                                <td>{user.phone_number}</td>
+                                                <td>0{user.phone_number}</td>
                                                 <td>{user.role}</td>
                                                 <td>
                                                     <Link

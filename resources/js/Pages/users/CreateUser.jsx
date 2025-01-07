@@ -80,7 +80,7 @@ const CreateUser = () => {
                                         Phone Number
                                     </label>
                                     <input
-                                        type="number"
+                                        type="text"
                                         className={`form-control form-control-sm ${
                                             errors.phone_number && "is-invalid"
                                         }`}

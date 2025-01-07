@@ -36,13 +36,13 @@ class UsersController extends Controller
             'email' => ['required', 'email', 'unique:users'],
             'password' => ['required', 'min:8'],
             'role' => ['required'],
-            'phone_number' => ['required', 'max:15'],
+            'phone_number' => ['required', 'regex:/^\d{11,11}$/', 'numeric'],
         ]);
 
         try {
             User::create($validated);
             return redirect()->route('users.index');
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return redirect()->back()->withErrors(['error' => 'Failed to create user.']);
         }
     }
@@ -70,15 +70,16 @@ class UsersController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'max:50'],
-            'email' => ['required', 'email', "unique:users,email,{$user->id}"],
+            'email' => ['required', 'email'],
             'role' => ['required'],
-            'phone_number' => ['required', 'max:15'],
+            // 'password' => ['nullable','min:8'],
+            'phone_number' => ['required', 'regex:/^\d{11,11}$/', 'numeric'],
         ]);
 
         try {
             $user->update($validated);
             return redirect()->route('users.index');
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return redirect()->back()->withErrors(['error' => 'Failed to update user.']);
         }
     }
@@ -91,7 +92,7 @@ class UsersController extends Controller
         try {
             $user->delete();
             return redirect()->back();
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return redirect()->back()->withErrors(['error' => 'Failed to delete user.']);
         }
     }

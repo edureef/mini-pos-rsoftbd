@@ -5,7 +5,7 @@ const EditUser = ({ user }) => {
     const { data, setData, put, processing, errors } = useForm({
         name: user.name,
         email: user.email,
-        phone_number: user.phone_number,
+        phone_number: "0" + user.phone_number,
         role: user.role,
         password: "",
     });
@@ -81,7 +81,7 @@ const EditUser = ({ user }) => {
                                         Phone Number
                                     </label>
                                     <input
-                                        type="number"
+                                        type="text"
                                         className={`form-control form-control-sm ${
                                             errors.phone_number && "is-invalid"
                                         }`}
