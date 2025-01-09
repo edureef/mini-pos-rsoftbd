@@ -45,9 +45,14 @@ class PurchaseProductController extends Controller
         ]);
 
         foreach ($request->products as $value) {
+            if (empty($value)) {
+                return back()->withError('Product form cannot be empty');
+            }
+
             if ($value['quantity'] <= 0) {
                 return redirect()->back()->with(['error' => 'Quantity must be positive number']);
             }
+
             $previousStock = Stock::where('product_id', $value['productId'])->first();
             $stock->updateOrCreate(['product_id' => $value['productId']], [
                 'quantity' => $previousStock == null ? $value['quantity'] : $value['quantity'] + $previousStock->quantity,

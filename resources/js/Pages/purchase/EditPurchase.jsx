@@ -117,8 +117,8 @@ const EditPurchase = ({ suppliers, products, purchase, units }) => {
                                 <thead className="text-center">
                                     <tr>
                                         <th>Product</th>
-                                        <th>Unit</th>
                                         <th>Quantity</th>
+                                        <th>Unit</th>
                                         <th>Price</th>
                                         <th>Total</th>
                                         <th>Actions</th>
@@ -153,6 +153,17 @@ const EditPurchase = ({ suppliers, products, purchase, units }) => {
                                             </td>
                                             <td>
                                                 <input
+                                                    type="number"
+                                                    name="quantity"
+                                                    className="form-control form-control-sm"
+                                                    value={item.quantity || ""}
+                                                    onChange={(e) =>
+                                                        handleChange(index, e)
+                                                    }
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
                                                     type="text"
                                                     name="unit"
                                                     list="units"
@@ -174,17 +185,6 @@ const EditPurchase = ({ suppliers, products, purchase, units }) => {
                                                         )
                                                     )}
                                                 </datalist>
-                                            </td>
-                                            <td>
-                                                <input
-                                                    type="number"
-                                                    name="quantity"
-                                                    className="form-control form-control-sm"
-                                                    value={item.quantity || ""}
-                                                    onChange={(e) =>
-                                                        handleChange(index, e)
-                                                    }
-                                                />
                                             </td>
                                             <td>
                                                 <input
