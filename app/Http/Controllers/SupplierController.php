@@ -32,10 +32,10 @@ class SupplierController extends Controller
     {
         $validtae = $request->validate([
             'name' => ['required', 'max:50'],
-            'email' => ['required', 'email'],
-            'phone_number' => ['required'],
-            'company_name' => ['required'],
-            'address' => ['required'],
+            'email' => ['unique:suppliers'],
+            'phone_number' => ['required', 'regex:/^\d{11,11}$/'],
+            'company_name' => ['required', 'max:255'],
+            'address' => ['max:255'],
         ]);
 
         $supplier->create($validtae);
@@ -66,10 +66,10 @@ class SupplierController extends Controller
     {
         $validtae = $request->validate([
             'name' => ['required', 'max:50'],
-            'email' => ['required', 'email'],
-            'phone_number' => ['required'],
+            'email' => [''],
+            'phone_number' => ['required', 'min:11', 'max:11'],
             'company_name' => ['required'],
-            'address' => ['required'],
+            'address' => ['max:255'],
         ]);
 
         $supplier->update($validtae);
