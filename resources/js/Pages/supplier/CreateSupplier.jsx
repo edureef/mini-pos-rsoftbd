@@ -39,8 +39,8 @@ const CreateSupplier = () => {
             <div className="card shadow-sm">
                 <div className="card-body">
                     <form onSubmit={handleSubmit} method="post">
-                        <div className="row mb-3">
-                            <div className="col-6">
+                        <div className="row mb-2 g-3">
+                            <div className="col-12 col-md-6">
                                 <label className="form-label">
                                     Supplier Name
                                 </label>
@@ -58,7 +58,7 @@ const CreateSupplier = () => {
                                     <p className="text-danger">{errors.name}</p>
                                 )}
                             </div>
-                            <div className="col-6">
+                            <div className="col-12 col-md-6">
                                 <label className="form-label">Email</label>
                                 <input
                                     type="email"
@@ -76,9 +76,8 @@ const CreateSupplier = () => {
                                     </p>
                                 )}
                             </div>
-                        </div>
-                        <div className="row mb-3">
-                            <div className="col-6">
+
+                            <div className="col-12 col-md-6">
                                 <label className="form-label">
                                     Phone Number
                                 </label>
@@ -98,7 +97,7 @@ const CreateSupplier = () => {
                                     </p>
                                 )}
                             </div>
-                            <div className="col-6">
+                            <div className="col-12 col-md-6">
                                 <label className="form-label">
                                     Company Name
                                 </label>
@@ -118,9 +117,8 @@ const CreateSupplier = () => {
                                     </p>
                                 )}
                             </div>
-                        </div>
-                        <div className="row mb-3">
-                            <div className="col-6">
+
+                            <div className="col-12 col-md-6">
                                 <label className="form-label">Address</label>
                                 <input
                                     type="text"
@@ -139,7 +137,7 @@ const CreateSupplier = () => {
                                 )}
                             </div>
                         </div>
-                        <div className="text-end">
+                        <div className="text-end mt-3">
                             <button
                                 className="btn btn-sm btn-primary"
                                 type="submit"

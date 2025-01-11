@@ -46,8 +46,8 @@ const editSupplier = ({
             <div className="card shadow-sm">
                 <div className="card-body">
                     <form onSubmit={handleSubmit} method="post">
-                        <div className="row mb-3">
-                            <div className="col-6">
+                        <div className="row mb-2 g-3">
+                            <div className="col-12 col-md-6">
                                 <label className="form-label">
                                     Supplier Name
                                 </label>
@@ -65,7 +65,7 @@ const editSupplier = ({
                                     <p className="text-danger">{errors.name}</p>
                                 )}
                             </div>
-                            <div className="col-6">
+                            <div className="col-12 col-md-6">
                                 <label className="form-label">Email</label>
                                 <input
                                     type="email"
@@ -83,9 +83,8 @@ const editSupplier = ({
                                     </p>
                                 )}
                             </div>
-                        </div>
-                        <div className="row mb-3">
-                            <div className="col-6">
+
+                            <div className="col-12 col-md-6">
                                 <label className="form-label">
                                     Phone Number
                                 </label>
@@ -105,7 +104,7 @@ const editSupplier = ({
                                     </p>
                                 )}
                             </div>
-                            <div className="col-6">
+                            <div className="col-12 col-md-6">
                                 <label className="form-label">
                                     Company Name
                                 </label>
@@ -125,9 +124,8 @@ const editSupplier = ({
                                     </p>
                                 )}
                             </div>
-                        </div>
-                        <div className="row mb-3">
-                            <div className="col-6">
+
+                            <div className="col-12 col-md-6">
                                 <label className="form-label">Address</label>
                                 <input
                                     type="text"
@@ -146,7 +144,7 @@ const editSupplier = ({
                                 )}
                             </div>
                         </div>
-                        <div className="text-end">
+                        <div className="text-end mt-3">
                             <button
                                 className="btn btn-sm btn-primary"
                                 type="submit"
