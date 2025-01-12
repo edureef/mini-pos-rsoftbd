@@ -38,8 +38,8 @@ const CreateCustomer = () => {
             <div className="card shadow-sm">
                 <div className="card-body">
                     <form onSubmit={handleSubmit} method="post">
-                        <div className="row mb-3">
-                            <div className="col-6">
+                        <div className="row mb-3 g-3">
+                            <div className="col-12 col-md-6">
                                 <label className="form-label">
                                     Customer Name
                                 </label>
@@ -57,7 +57,7 @@ const CreateCustomer = () => {
                                     <p className="text-danger">{errors.name}</p>
                                 )}
                             </div>
-                            <div className="col-6">
+                            <div className="col-12 col-md-6">
                                 <label className="form-label">Email</label>
                                 <input
                                     type="email"
@@ -75,9 +75,8 @@ const CreateCustomer = () => {
                                     </p>
                                 )}
                             </div>
-                        </div>
-                        <div className="row mb-3">
-                            <div className="col-6">
+
+                            <div className="col-12 col-md-6">
                                 <label className="form-label">
                                     Phone Number
                                 </label>
@@ -97,7 +96,7 @@ const CreateCustomer = () => {
                                     </p>
                                 )}
                             </div>
-                            <div className="col-6">
+                            <div className="col-12 col-md-6">
                                 <label className="form-label">Address</label>
                                 <input
                                     type="text"
