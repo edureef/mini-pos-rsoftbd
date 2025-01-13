@@ -158,7 +158,11 @@ const Sidebar = ({ isOpen }) => {
                     </li>
                     <li
                         className={`nav-item ${
-                            url.startsWith("/getProductStocks") ? "active" : ""
+                            url.startsWith("/getProductStocks")
+                                ? "active"
+                                : "" || url.startsWith("/saleReport")
+                                ? "active"
+                                : ""
                         }`}
                     >
                         <a
@@ -184,6 +188,18 @@ const Sidebar = ({ isOpen }) => {
                                         href="/getProductStocks"
                                     >
                                         Product Stock Report
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link
+                                        className={`nav-link ${
+                                            url.startsWith("/saleReport")
+                                                ? "active"
+                                                : ""
+                                        }`}
+                                        href="/saleReport"
+                                    >
+                                        Product Sales Report
                                     </Link>
                                 </li>
                             </ul>

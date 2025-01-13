@@ -19,4 +19,8 @@ class ReportsController extends Controller
         $stock->where('id', $request->id)->delete();
         return redirect()->back();
     }
+    public function productSalesReport()
+    {
+        return Inertia::render('reports/ProductSalesReport');
+    }
 }

@@ -37,9 +37,10 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/group', [GroupController::class, 'store'])->name('group.store');
     Route::put('/group/{group}', [GroupController::class, 'update'])->name('group.update');
     Route::delete('/group/{group}', [GroupController::class, 'destroy'])->name('group.destroy');
-
+    // Reports Routes
     Route::get('/getProductStocks', [ReportsController::class, 'productStocks'])->name('getProductStocks');
     Route::delete('/deleteProductStocks/{id}', [ReportsController::class, 'deleteStock'])->name('deleteProductStocks');
+    Route::get('/saleReport', [ReportsController::class, 'productSalesReport'])->name('saleReport');
 });
 
 Route::middleware('auth')->group(function () {
