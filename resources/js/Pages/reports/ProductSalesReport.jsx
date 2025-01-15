@@ -1,7 +1,24 @@
-import { Head } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 import Layout from "../components/Layout";
 
-const ProductSalesReport = () => {
+const ProductSalesReport = ({ cashiers, filterData }) => {
+    const { data, setData, post, processing, errors, reset } = useForm({
+        cashierId: "",
+        day: "",
+        month: "",
+        year: "",
+    });
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        post("/saleReport", {
+            onSuccess: () => {
+                reset();
+            },
+        });
+        console.log(filterData);
+    };
+
     return (
         <>
             <Head title="Sales Report" />
@@ -14,31 +31,49 @@ const ProductSalesReport = () => {
                     </div>
                 </div>
 
-                <div className="row">
+                <div className="row g-3">
                     <div className="col-12 col-md-4">
                         <div className="card shadow-sm">
                             <div className="card-body">
-                                <form action="">
+                                <form action="" onSubmit={handleSubmit}>
                                     <div className="d-flex flex-column gap-3">
                                         <div className="row g-3 align-items-center">
                                             <label className="form-label form-label-sm col-5">
                                                 Cashier:
                                             </label>
                                             <div className="col-7">
-                                                <select className="form-select form-select-sm text-dark">
+                                                <select
+                                                    className={`form-select form-select-sm text-dark ${
+                                                        errors.cashierId &&
+                                                        "is-invalid border-danger"
+                                                    }`}
+                                                    onChange={(e) =>
+                                                        setData(
+                                                            "cashierId",
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                >
                                                     <option value="">
                                                         Select a Cashier
                                                     </option>
-                                                    <option value="cashier1">
-                                                        Cashier 1
+                                                    <option value="allCashier">
+                                                        All
                                                     </option>
-                                                    <option value="cashier2">
-                                                        Cashier 2
-                                                    </option>
-                                                    <option value="cashier3">
-                                                        Cashier 3
-                                                    </option>
+                                                    {cashiers.map((cashier) => (
+                                                        <option
+                                                            key={cashier.id}
+                                                            value={cashier.id}
+                                                        >
+                                                            {cashier.name}
+                                                        </option>
+                                                    ))}
                                                 </select>
+                                                {errors.cashierId && (
+                                                    <p className="text-danger">
+                                                        {errors.cashierId}
+                                                    </p>
+                                                )}
                                             </div>
                                         </div>
                                         <div className="row g-3 align-items-center">
@@ -46,7 +81,18 @@ const ProductSalesReport = () => {
                                                 Day:
                                             </label>
                                             <div className="col-7">
-                                                <select className="form-select form-select-sm text-dark">
+                                                <select
+                                                    className={`form-select form-select-sm text-dark ${
+                                                        errors.day &&
+                                                        "is-invalid"
+                                                    }`}
+                                                    onChange={(e) =>
+                                                        setData(
+                                                            "day",
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                >
                                                     <option value="">
                                                         Select a Day
                                                     </option>
@@ -61,6 +107,11 @@ const ProductSalesReport = () => {
                                                         </option>
                                                     ))}
                                                 </select>
+                                                {errors.day && (
+                                                    <p className="text-danger">
+                                                        {errors.day}
+                                                    </p>
+                                                )}
                                             </div>
                                         </div>
                                         <div className="row g-3 align-items-center">
@@ -68,30 +119,63 @@ const ProductSalesReport = () => {
                                                 Month:
                                             </label>
                                             <div className="col-7">
-                                                <select className="form-select form-select-sm text-dark">
-                                                    {[
-                                                        "Select a Month",
-                                                        "January",
-                                                        "February",
-                                                        "March",
-                                                        "April",
-                                                        "May",
-                                                        "June",
-                                                        "July",
-                                                        "August",
-                                                        "September",
-                                                        "October",
-                                                        "November",
-                                                        "December",
-                                                    ].map((month, index) => (
-                                                        <option
-                                                            key={index}
-                                                            value={month}
-                                                        >
-                                                            {month}
-                                                        </option>
-                                                    ))}
+                                                <select
+                                                    className={`form-select form-select-sm text-dark ${
+                                                        errors.month &&
+                                                        "is-invalid border-danger"
+                                                    }`}
+                                                    onChange={(e) =>
+                                                        setData(
+                                                            "month",
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                >
+                                                    <option value="">
+                                                        Select a Month
+                                                    </option>
+                                                    <option value="1">
+                                                        January
+                                                    </option>
+                                                    <option value="2">
+                                                        February
+                                                    </option>
+                                                    <option value="3">
+                                                        March
+                                                    </option>
+                                                    <option value="4">
+                                                        April
+                                                    </option>
+                                                    <option value="5">
+                                                        May
+                                                    </option>
+                                                    <option value="6">
+                                                        June
+                                                    </option>
+                                                    <option value="7">
+                                                        July
+                                                    </option>
+                                                    <option value="8">
+                                                        August
+                                                    </option>
+                                                    <option value="9">
+                                                        September
+                                                    </option>
+                                                    <option value="10">
+                                                        October
+                                                    </option>
+                                                    <option value="11">
+                                                        November
+                                                    </option>
+                                                    <option value="12">
+                                                        December
+                                                    </option>
                                                 </select>
+                                                {errors.month && (
+                                                    <p className="text-danger">
+                                                        {errors.month}
+                                                    </p>
+                                                )}
                                             </div>
                                         </div>
                                         <div className="row g-3 align-items-center">
@@ -101,13 +185,29 @@ const ProductSalesReport = () => {
                                             <div className="col-7">
                                                 <input
                                                     type="number"
-                                                    name=""
-                                                    className="form-control form-control-sm"
+                                                    className={`form-control form-control-sm ${
+                                                        errors.year &&
+                                                        "is-invalid"
+                                                    }`}
+                                                    onChange={(e) =>
+                                                        setData(
+                                                            "year",
+                                                            e.target.value
+                                                        )
+                                                    }
                                                 />
+                                                {errors.year && (
+                                                    <p className="text-danger">
+                                                        {errors.year}
+                                                    </p>
+                                                )}
                                             </div>
                                         </div>
                                         <div className="d-flex justify-content-end">
-                                            <button className="btn btn-sm btn-primary fw-bold">
+                                            <button
+                                                className="btn btn-sm btn-primary fw-bold"
+                                                disabled={processing}
+                                            >
                                                 Submit
                                             </button>
                                         </div>

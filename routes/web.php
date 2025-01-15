@@ -41,6 +41,7 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/getProductStocks', [ReportsController::class, 'productStocks'])->name('getProductStocks');
     Route::delete('/deleteProductStocks/{id}', [ReportsController::class, 'deleteStock'])->name('deleteProductStocks');
     Route::get('/saleReport', [ReportsController::class, 'productSalesReport'])->name('saleReport');
+    Route::post('/saleReport', [ReportsController::class, 'getSalesReport'])->name('getSaleReport');
 });
 
 Route::middleware('auth')->group(function () {
