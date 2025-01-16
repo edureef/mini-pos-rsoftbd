@@ -9,7 +9,6 @@ const SaleDetails = ({ sale, products }) => {
         contentRef,
         documentTitle: "Sale",
     });
-console.log(sale);
 
     return (
         <>
@@ -107,7 +106,7 @@ console.log(sale);
                                                 let product = products.filter(
                                                     (product) =>
                                                         product.id ==
-                                                        sale.productId
+                                                        sale.productName
                                                 );
                                                 return (
                                                     <tr key={i}>
