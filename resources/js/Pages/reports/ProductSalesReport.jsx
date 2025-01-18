@@ -1,7 +1,7 @@
 import { Head, useForm } from "@inertiajs/react";
 import Layout from "../components/Layout";
 
-const ProductSalesReport = ({ cashiers, filterData }) => {
+const ProductSalesReport = ({ cashiers, totalSalesAmount }) => {
     const { data, setData, post, processing, errors, reset } = useForm({
         cashierId: "",
         day: "",
@@ -16,7 +16,6 @@ const ProductSalesReport = ({ cashiers, filterData }) => {
                 reset();
             },
         });
-        console.log(filterData);
     };
 
     return (
@@ -47,6 +46,7 @@ const ProductSalesReport = ({ cashiers, filterData }) => {
                                                         errors.cashierId &&
                                                         "is-invalid border-danger"
                                                     }`}
+                                                    value={data.cashierId}
                                                     onChange={(e) =>
                                                         setData(
                                                             "cashierId",
@@ -86,6 +86,7 @@ const ProductSalesReport = ({ cashiers, filterData }) => {
                                                         errors.day &&
                                                         "is-invalid"
                                                     }`}
+                                                    value={data.day}
                                                     onChange={(e) =>
                                                         setData(
                                                             "day",
@@ -124,6 +125,7 @@ const ProductSalesReport = ({ cashiers, filterData }) => {
                                                         errors.month &&
                                                         "is-invalid border-danger"
                                                     }`}
+                                                    value={data.month}
                                                     onChange={(e) =>
                                                         setData(
                                                             "month",
@@ -189,6 +191,7 @@ const ProductSalesReport = ({ cashiers, filterData }) => {
                                                         errors.year &&
                                                         "is-invalid"
                                                     }`}
+                                                    value={data.year}
                                                     onChange={(e) =>
                                                         setData(
                                                             "year",
@@ -222,7 +225,10 @@ const ProductSalesReport = ({ cashiers, filterData }) => {
                                 <div className="table-responsive text-center">
                                     <div className="text-start">
                                         <h6 className="fw-bold text-success">
-                                            <span>Total sales amount:</span>
+                                            <span>
+                                                Total sales amount:{" "}
+                                                {totalSalesAmount ?? 0}
+                                            </span>
                                         </h6>
                                     </div>
                                     <hr />

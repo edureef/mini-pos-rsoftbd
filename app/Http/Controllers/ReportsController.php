@@ -29,28 +29,34 @@ class ReportsController extends Controller
 
     public function getSalesReport(Request $request)
     {
+        // Validate input
         $validated = $request->validate([
             'cashierId' => 'required',
-            'month' => 'required',
-            'year' => 'required',
+            'month' => 'required|integer',
+            'year' => 'required|integer',
         ]);
 
+        // Fetch all cashiers (excluding admin)
         $cashiers = User::where('role', '!=', 'admin')->latest()->get();
 
-        if ($request->cashierId == 'allCashier') {
-            $filterData = Sales::with('customer', 'user')->whereMonth('created_at', $request->month)->whereyear('created_at', $request->year)->latest('created_at')->get();
-            return Inertia::render('reports/ProductSalesReport', compact('cashiers', 'filterData'));
+        // Base query for sales filtering
+        $salesQuery = Sales::with('customer', 'user')
+            ->whereMonth('created_at', $request->month)
+            ->whereYear('created_at', $request->year);
+
+        if ($request->day > 0) {
+            $salesQuery->whereDay('created_at', $request->day);
         }
 
-        // Filter by a specific cashier
-        if ($request->cashierId != 'allCashier') {
-            $filterData = Sales::with('customer', 'user')
-                ->where('user_id', $request->cashierId)
-                ->whereMonth('created_at', $request->month)
-                ->whereYear('created_at', $request->year)
-                ->latest('created_at')
-                ->get();
-            return Inertia::render('reports/ProductSalesReport', compact('cashiers', 'filterData'));
+        // Check for specific cashier or all
+        if ($request->cashierId !== 'allCashier') {
+            $salesQuery->where('user_id', $request->cashierId);
         }
+
+        // Fetch total sales amount
+        $totalSalesAmount = $salesQuery->sum('grandTotal');
+
+        // Render the report
+        return Inertia::render('reports/ProductSalesReport', compact('cashiers', 'totalSalesAmount'));
     }
 }
