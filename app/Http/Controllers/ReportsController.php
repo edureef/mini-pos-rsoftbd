@@ -53,10 +53,11 @@ class ReportsController extends Controller
             $salesQuery->where('user_id', $request->cashierId);
         }
 
-        // Fetch total sales amount
+        // Fetch filtered data and total sales amount
+        $filterData = $salesQuery->latest('created_at')->get();
         $totalSalesAmount = $salesQuery->sum('grandTotal');
 
         // Render the report
-        return Inertia::render('reports/ProductSalesReport', compact('cashiers', 'totalSalesAmount'));
+        return Inertia::render('reports/ProductSalesReport', compact('cashiers', 'filterData', 'totalSalesAmount'));
     }
 }

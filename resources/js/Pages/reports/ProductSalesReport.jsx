@@ -1,7 +1,7 @@
 import { Head, useForm } from "@inertiajs/react";
 import Layout from "../components/Layout";
 
-const ProductSalesReport = ({ cashiers, totalSalesAmount }) => {
+const ProductSalesReport = ({ cashiers, filterData, totalSalesAmount }) => {
     const { data, setData, post, processing, errors, reset } = useForm({
         cashierId: "",
         day: "",
@@ -235,42 +235,42 @@ const ProductSalesReport = ({ cashiers, totalSalesAmount }) => {
                                     <table className="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th>Product Name</th>
-                                                <th>Barcode</th>
-                                                <th>Quantity</th>
-                                                <th>Price</th>
-                                                <th>Total</th>
+                                                <th>Sales By</th>
+                                                <th>Grand Total</th>
+                                                <th>Payment Due</th>
+                                                <th>Payment Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>Product 1</td>
-                                                <td>123456789</td>
-                                                <td>5</td>
-                                                <td>1000</td>
-                                                <td>5000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Product 2</td>
-                                                <td>987654321</td>
-                                                <td>3</td>
-                                                <td>1500</td>
-                                                <td>4500</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Product 3</td>
-                                                <td>555555555</td>
-                                                <td>2</td>
-                                                <td>2000</td>
-                                                <td>4000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Product 4</td>
-                                                <td>444444444</td>
-                                                <td>1</td>
-                                                <td>3000</td>
-                                                <td>3000</td>
-                                            </tr>
+                                            {filterData?.map((sale) => (
+                                                <tr key={sale.id}>
+                                                    <td>{sale.user.name}</td>
+                                                    <td>{sale.grandTotal}</td>
+                                                    <td>{sale.dueAmount}</td>
+                                                    <td>
+                                                        {sale.payment_status ==
+                                                        "paid" ? (
+                                                            <span className="badge badge-success">
+                                                                Paid
+                                                            </span>
+                                                        ) : (
+                                                            <span className="badge badge-danger">
+                                                                Due
+                                                            </span>
+                                                        )}
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                            {!filterData?.length && (
+                                                <tr>
+                                                    <td
+                                                        colSpan="4"
+                                                        className="text-center text-danger"
+                                                    >
+                                                        No Data
+                                                    </td>
+                                                </tr>
+                                            )}
                                         </tbody>
                                     </table>
                                 </div>
