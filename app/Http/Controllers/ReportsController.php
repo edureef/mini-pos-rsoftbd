@@ -57,6 +57,10 @@ class ReportsController extends Controller
         $filterData = $salesQuery->latest('created_at')->get();
         $totalSalesAmount = $salesQuery->sum('grandTotal');
 
+        if ($filterData->isEmpty()) {
+            return redirect()->back()->with(['error' => 'No sales data found.']);
+        }
+
         // Render the report
         return Inertia::render('reports/ProductSalesReport', compact('cashiers', 'filterData', 'totalSalesAmount'));
     }
