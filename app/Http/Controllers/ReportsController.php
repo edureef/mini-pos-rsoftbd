@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PurchaseProduct;
 use App\Models\Sales;
 use App\Models\Stock;
 use App\Models\User;
@@ -44,6 +45,11 @@ class ReportsController extends Controller
             ->whereMonth('created_at', $request->month)
             ->whereYear('created_at', $request->year);
 
+        $productCostPrice = PurchaseProduct::with('supplier')
+            ->whereMonth('created_at', $request->month)
+            ->whereYear('created_at', $request->year)
+            ->sum('grandTotal');
+
         if ($request->day > 0) {
             $salesQuery->whereDay('created_at', $request->day);
         }
@@ -62,6 +68,6 @@ class ReportsController extends Controller
         }
 
         // Render the report
-        return Inertia::render('reports/ProductSalesReport', compact('cashiers', 'filterData', 'totalSalesAmount'));
+        return Inertia::render('reports/ProductSalesReport', compact('cashiers', 'filterData', 'totalSalesAmount', 'productCostPrice'));
     }
 }

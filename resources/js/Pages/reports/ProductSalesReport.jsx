@@ -1,7 +1,12 @@
 import { Head, useForm } from "@inertiajs/react";
 import Layout from "../components/Layout";
 
-const ProductSalesReport = ({ cashiers, filterData, totalSalesAmount }) => {
+const ProductSalesReport = ({
+    cashiers,
+    filterData,
+    totalSalesAmount,
+    productCostPrice,
+}) => {
     const { data, setData, post, processing, errors, reset } = useForm({
         cashierId: "",
         day: "",
@@ -226,8 +231,14 @@ const ProductSalesReport = ({ cashiers, filterData, totalSalesAmount }) => {
                                     <div className="text-start">
                                         <h6 className="fw-bold text-success">
                                             <span>
-                                                Total sales amount:{" "}
+                                                Total Sales Amount:{" "}
                                                 {totalSalesAmount ?? 0}
+                                            </span>
+                                        </h6>
+                                        <h6 className="fw-bold text-warning">
+                                            <span>
+                                                Total Cost Amount:{" "}
+                                                {productCostPrice ?? 0}
                                             </span>
                                         </h6>
                                     </div>
