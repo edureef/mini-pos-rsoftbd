@@ -32,7 +32,8 @@ class SupplierController extends Controller
     {
         $validtae = $request->validate([
             'name' => ['required', 'max:50'],
-            'email' => ['unique:suppliers'],
+            // 'email' => ['unique:suppliers'],
+            'email' => [''],
             'phone_number' => ['required', 'regex:/^\d{11,11}$/'],
             'company_name' => ['required', 'max:255'],
             'address' => ['max:255'],

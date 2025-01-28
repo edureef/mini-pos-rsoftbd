@@ -45,6 +45,7 @@ class ProductController extends Controller
             'category_id' => ['required'],
             'group_id' => ['required'],
             'unit' => ['required'],
+            'cost_price' => ['required'],
         ]);
         $barcode = ['barcode' => random_int(1000000, 9999999)];
         $product->create($validtae + $barcode);
@@ -71,7 +72,7 @@ class ProductController extends Controller
         $categorys = Category::latest()->paginate(1000);
         $groups = Group::latest()->paginate(1000);
         $units = Unit::latest()->get();
-        return Inertia::render('product/EditProduct', compact('products', 'brands', 'categorys', 'groups','units'));
+        return Inertia::render('product/EditProduct', compact('products', 'brands', 'categorys', 'groups', 'units'));
     }
 
     /**
@@ -86,6 +87,7 @@ class ProductController extends Controller
             'category_id' => ['required'],
             'group_id' => ['required'],
             'unit' => ['required'],
+            'cost_price' => ['required'],
         ]);
         $product->update($validtae);
 

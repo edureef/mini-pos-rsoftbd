@@ -9,6 +9,7 @@ const EditProduct = ({ products, brands, categorys, groups, units }) => {
         category_id: products.category_id,
         group_id: products.group_id,
         unit: products.unit,
+        cost_price: products.cost_price,
     });
 
     const handleSubmit = (e) => {
@@ -203,6 +204,31 @@ const EditProduct = ({ products, brands, categorys, groups, units }) => {
                                     {errors.description && (
                                         <p className="invalid-feedback">
                                             {errors.description}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-6">
+                                    <label className="form-label">
+                                        Product Cost Price
+                                    </label>
+                                    <input
+                                        type="number"
+                                        className={`form-control form-control-sm ${
+                                            errors.cost_price && "is-invalid"
+                                        }`}
+                                        value={data.cost_price}
+                                        onChange={(e) =>
+                                            setData(
+                                                "cost_price",
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+                                    {errors.cost_price && (
+                                        <p className="invalid-feedback">
+                                            {errors.cost_price}
                                         </p>
                                     )}
                                 </div>

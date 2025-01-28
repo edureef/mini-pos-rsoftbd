@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('group_id')->constrained()->cascadeOnUpdate()->restrictOnDelete();
             $table->string('unit');
             $table->string('barcode');
+            $table->float('cost_price');
             $table->timestamps();
         });
     }

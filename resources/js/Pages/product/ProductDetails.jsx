@@ -34,7 +34,7 @@ const ProductDetails = ({ products }) => {
                                     </label>
                                     <input
                                         type="text"
-                                        className="form-control"
+                                        className="form-control form-control-sm"
                                         id="name"
                                         value={products.name}
                                         disabled
@@ -51,7 +51,7 @@ const ProductDetails = ({ products }) => {
                                     </label>
                                     <input
                                         type="text"
-                                        className="form-control"
+                                        className="form-control form-control-sm"
                                         id="name"
                                         value={products.brand.name}
                                         disabled
@@ -68,7 +68,7 @@ const ProductDetails = ({ products }) => {
                                     </label>
                                     <input
                                         type="text"
-                                        className="form-control"
+                                        className="form-control form-control-sm"
                                         id="name"
                                         value={products.category.name}
                                         disabled
@@ -85,7 +85,7 @@ const ProductDetails = ({ products }) => {
                                     </label>
                                     <input
                                         type="text"
-                                        className="form-control"
+                                        className="form-control form-control-sm"
                                         id="name"
                                         value={products.group.name}
                                         disabled
@@ -102,9 +102,26 @@ const ProductDetails = ({ products }) => {
                                     </label>
                                     <input
                                         type="text"
-                                        className="form-control"
+                                        className="form-control form-control-sm"
                                         id="name"
                                         value={products.description}
+                                        disabled
+                                    />
+                                </div>
+                            </div>
+                            <div className="col-md-6">
+                                <div className="mb-3">
+                                    <label
+                                        htmlFor="name"
+                                        className="form-label"
+                                    >
+                                        Product Cost Price
+                                    </label>
+                                    <input
+                                        type="number"
+                                        className="form-control form-control-sm"
+                                        id="name"
+                                        value={products.cost_price}
                                         disabled
                                     />
                                 </div>
@@ -125,7 +142,7 @@ const ProductDetails = ({ products }) => {
                                 </label>
                                 <input
                                     type="text"
-                                    className="form-control"
+                                    className="form-control form-control-sm"
                                     id="name"
                                     value={products.unit}
                                     disabled
