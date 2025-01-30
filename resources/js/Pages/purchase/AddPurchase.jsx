@@ -69,8 +69,7 @@ const AddPurchase = ({ suppliers, products }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // post("/purchase");
-        console.log(data);
+        post("/purchase");
     };
 
     return (
