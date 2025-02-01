@@ -1,7 +1,7 @@
 import { Head, Link, useForm } from "@inertiajs/react";
 import Layout from "../components/Layout";
 
-const EditPurchase = ({ suppliers, products, purchase, units }) => {
+const EditPurchase = ({ suppliers, products, purchase }) => {
     const { data, setData, put, processing, errors } = useForm({
         supplier_id: purchase.supplier_id,
         products: [...purchase.products],
@@ -12,11 +12,23 @@ const EditPurchase = ({ suppliers, products, purchase, units }) => {
         grandTotal: "",
     });
 
-    const addRow = () => {
-        setData("products", [
-            ...data.products,
-            { productName: "", unit: "", quantity: "", price: "" },
-        ]);
+    const addRow = (e) => {
+        const productId = e.target.value;
+        if (!productId) return;
+
+        const product = products.data.find((p) => p.id == productId);
+        if (product) {
+            setData("products", [
+                ...data.products,
+                {
+                    productId: product.id,
+                    productName: product.name,
+                    unit: product.unit,
+                    quantity: 1,
+                    price: product.cost_price,
+                },
+            ]);
+        }
     };
 
     const removeRow = (index) => {
@@ -81,30 +93,67 @@ const EditPurchase = ({ suppliers, products, purchase, units }) => {
 
                 <div className="card mb-3 shadow-sm">
                     <div className="card-body">
-                        <div className="row align-items-center">
-                            <div className="col-md-1">
-                                <label className="form-label">Supplier:</label>
-                            </div>
-                            <div className="col-md-3">
-                                <select
-                                    className="form-select form-select-sm text-dark"
-                                    value={data.supplier_id}
-                                    onChange={(e) =>
-                                        setData("supplier_id", e.target.value)
-                                    }
-                                >
-                                    <option value="">Select Supplier</option>
-                                    {suppliers.data.map((item, index) => (
-                                        <option key={index} value={item.id}>
-                                            {item.name}
-                                        </option>
-                                    ))}
-                                </select>
-                                {errors.supplier_id && (
-                                    <div className="text-danger">
-                                        {errors.supplier_id}
+                        <div className="row">
+                            <div className="col-md-4">
+                                <div className="row align-items-center">
+                                    <label className="col-md-5">
+                                        Supplier:
+                                    </label>
+                                    <div className="col-md-7">
+                                        <select
+                                            className="form-select form-select-sm text-dark"
+                                            value={data.supplier_id}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "supplier_id",
+                                                    e.target.value
+                                                )
+                                            }
+                                        >
+                                            <option value="">
+                                                Select Supplier
+                                            </option>
+                                            {suppliers.data.map((item) => (
+                                                <option
+                                                    key={item.id}
+                                                    value={item.id}
+                                                >
+                                                    {item.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        {errors.supplier_id && (
+                                            <div className="text-danger">
+                                                {errors.supplier_id}
+                                            </div>
+                                        )}
                                     </div>
-                                )}
+                                </div>
+                            </div>
+                            <div className="col-md-4">
+                                <div className="row align-items-center">
+                                    <label className="col-sm-6">
+                                        Add Product:
+                                    </label>
+                                    <div className="col-sm-6">
+                                        <select
+                                            className="form-select form-select-sm text-dark"
+                                            onChange={addRow}
+                                        >
+                                            <option value="">
+                                                Select Product
+                                            </option>
+                                            {products.data.map((item) => (
+                                                <option
+                                                    key={item.id}
+                                                    value={item.id}
+                                                >
+                                                    {item.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -113,8 +162,8 @@ const EditPurchase = ({ suppliers, products, purchase, units }) => {
                 <div className="card mb-3 shadow-sm">
                     <div className="card-body">
                         <div className="table-responsive">
-                            <table className="table table-hover">
-                                <thead className="text-center">
+                            <table className="table table-hover text-center">
+                                <thead>
                                     <tr>
                                         <th>Product</th>
                                         <th>Quantity</th>
@@ -126,89 +175,51 @@ const EditPurchase = ({ suppliers, products, purchase, units }) => {
                                 </thead>
                                 <tbody>
                                     {data.products.map((item, index) => (
-                                        <tr key={index}>
+                                        <tr key={item.id || index}>
                                             <td>
-                                                <select
-                                                    className="form-select form-select-sm text-dark"
-                                                    name="productId"
-                                                    value={item.productId}
+                                                <span
                                                     onChange={(e) =>
                                                         handleChange(index, e)
                                                     }
                                                 >
-                                                    <option value="">
-                                                        Select Product
-                                                    </option>
-                                                    {products.data.map(
-                                                        (prod, idx) => (
-                                                            <option
-                                                                key={idx}
-                                                                value={prod.id}
-                                                            >
-                                                                {prod.name}
-                                                            </option>
-                                                        )
-                                                    )}
-                                                </select>
+                                                    {item.productName}
+                                                </span>
                                             </td>
-                                            <td>
+                                            <td style={{ width: "200px" }}>
                                                 <input
                                                     type="number"
                                                     name="quantity"
+                                                    value={item.quantity}
                                                     className="form-control form-control-sm"
-                                                    value={item.quantity || ""}
                                                     onChange={(e) =>
                                                         handleChange(index, e)
                                                     }
                                                 />
                                             </td>
                                             <td>
-                                                <input
-                                                    type="text"
-                                                    name="unit"
-                                                    list="units"
-                                                    className="form-control form-control-sm"
-                                                    value={item.unit}
+                                                <span
                                                     onChange={(e) =>
                                                         handleChange(index, e)
                                                     }
-                                                />
-                                                <datalist id="units">
-                                                    {units.map(
-                                                        (item, index) => (
-                                                            <option
-                                                                key={index}
-                                                                value={
-                                                                    item.name
-                                                                }
-                                                            />
-                                                        )
-                                                    )}
-                                                </datalist>
+                                                >
+                                                    {item.unit}
+                                                </span>
                                             </td>
                                             <td>
-                                                <input
-                                                    type="number"
-                                                    name="price"
-                                                    className="form-control form-control-sm"
-                                                    value={item.price || ""}
+                                                <span
                                                     onChange={(e) =>
                                                         handleChange(index, e)
                                                     }
-                                                />
+                                                >
+                                                    {item.price}
+                                                </span>
                                             </td>
                                             <td>
-                                                <input
-                                                    type="number"
-                                                    className="form-control form-control-sm"
-                                                    disabled
-                                                    value={
-                                                        (
-                                                            item.quantity *
-                                                            item.price
-                                                        ).toFixed(2) || 0
-                                                    }
-                                                />
+                                                <span>
+                                                    {Number(
+                                                        item.quantity || 0
+                                                    ) * Number(item.price || 0)}
+                                                </span>
                                             </td>
                                             <td>
                                                 <button
@@ -232,16 +243,19 @@ const EditPurchase = ({ suppliers, products, purchase, units }) => {
                                             </td>
                                         </tr>
                                     )}
+                                    {data.products.length < 1 && (
+                                        <tr>
+                                            <td
+                                                colSpan="6"
+                                                className="text-center text-danger"
+                                            >
+                                                Please add at least one product
+                                            </td>
+                                        </tr>
+                                    )}
                                 </tbody>
                             </table>
                         </div>
-
-                        <button
-                            className="btn btn-sm btn-primary mt-3"
-                            onClick={addRow}
-                        >
-                            Add Row
-                        </button>
                     </div>
                 </div>
 
