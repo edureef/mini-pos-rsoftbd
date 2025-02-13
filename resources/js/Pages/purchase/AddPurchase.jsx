@@ -1,12 +1,14 @@
-import { Head, Link, useForm, usePage } from "@inertiajs/react";
+import { Head, Link, useForm } from "@inertiajs/react";
 import Layout from "../components/Layout";
+import { useRef } from "react";
 
 const AddPurchase = ({ suppliers, products }) => {
+    const productSearchRef = useRef("");
     const { data, setData, post, processing, errors } = useForm({
         supplier_id: "",
         products: [],
         netTotal: "",
-        discount: "",
+        discount: 0,
         paidAmount: "",
         dueAmount: "",
         grandTotal: "",
@@ -28,6 +30,7 @@ const AddPurchase = ({ suppliers, products }) => {
                     price: product.cost_price,
                 },
             ]);
+            productSearchRef.current.value = "";
         }
     };
 
@@ -133,22 +136,29 @@ const AddPurchase = ({ suppliers, products }) => {
                                         Add Product:
                                     </label>
                                     <div className="col-sm-6">
-                                        <select
+                                        <input
                                             className="form-select form-select-sm text-dark"
+                                            list="fruit-suggestions"
+                                            ref={productSearchRef}
                                             onChange={addRow}
-                                        >
-                                            <option value="">
-                                                Select Product
-                                            </option>
+                                            // placeholder="Type or select..."
+                                        />
+                                        {errors.products && (
+                                            <div className="text-danger">
+                                                {errors.products}
+                                            </div>
+                                        )}
+                                        <datalist id="fruit-suggestions">
                                             {products.data.map((item) => (
                                                 <option
                                                     key={item.id}
                                                     value={item.id}
+                                                    onChange={addRow}
                                                 >
                                                     {item.name}
                                                 </option>
                                             ))}
-                                        </select>
+                                        </datalist>
                                     </div>
                                 </div>
                             </div>
