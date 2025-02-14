@@ -40,7 +40,7 @@ class PurchaseProductController extends Controller
         $request->validate([
             'supplier_id' => 'required',
             'products' => 'required|array',
-            'discount' => 'required',
+            'discount' => 'nullable|numeric',
             'paidAmount' => 'required',
         ]);
 
@@ -63,7 +63,7 @@ class PurchaseProductController extends Controller
             'supplier_id' => $request->supplier_id,
             'products' => $request->products,
             'netTotal' => $request->netTotal,
-            'discount' => $request->discount,
+            'discount' => $request->discount ?? 0,
             'paidAmount' => $request->paidAmount,
             'dueAmount' => $request->dueAmount,
             'grandTotal' => $request->grandTotal,
@@ -103,7 +103,7 @@ class PurchaseProductController extends Controller
         $request->validate([
             'supplier_id' => 'required',
             'products' => 'required|array',
-            'discount' => 'required',
+            'discount' => 'nullable|numeric',
             'paidAmount' => 'required',
         ]);
 
@@ -111,7 +111,7 @@ class PurchaseProductController extends Controller
             'supplier_id' => $request->supplier_id,
             'products' => $request->products,
             'netTotal' => $request->netTotal,
-            'discount' => $request->discount,
+            'discount' => $request->discount ?? 0,
             'paidAmount' => $request->paidAmount,
             'dueAmount' => $request->dueAmount,
             'grandTotal' => $request->grandTotal,

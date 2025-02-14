@@ -17,7 +17,7 @@ return new class extends Migration
             $table->json('products');
             $table->enum('payment_status', ['paid', 'due'])->default('due');
             $table->float('netTotal');
-            $table->float('discount');
+            $table->float('discount')->nullable();
             $table->float('paidAmount');
             $table->float('dueAmount');
             $table->float('grandTotal');
