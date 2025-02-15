@@ -1,5 +1,6 @@
 import { Head, Link, useForm } from "@inertiajs/react";
 import Layout from "../components/Layout";
+import CreateCustomerModal from "../components/modals/CreateCustomerModal";
 
 const AddSale = ({ customers, products, units }) => {
     const { data, setData, post, processing, errors } = useForm({
@@ -100,6 +101,9 @@ const AddSale = ({ customers, products, units }) => {
                                         {errors.customer_id}
                                     </div>
                                 )}
+                            </div>
+                            <div className="col-md-2">
+                                <CreateCustomerModal />
                             </div>
                         </div>
                     </div>
