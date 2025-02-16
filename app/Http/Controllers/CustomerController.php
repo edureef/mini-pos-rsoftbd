@@ -32,12 +32,16 @@ class CustomerController extends Controller
     {
         $validtae = $request->validate([
             'name' => ['required', 'max:50'],
-            'email' => ['unique:customers'],
+            'email' => ['nullable', 'unique:customers'],
             'phone_number' => ['required', 'regex:/^\d{11,11}$/'],
             'address' => ['max:255'],
         ]);
 
         $customer->create($validtae);
+
+        if ($request->createCustomerModal == 'isCreateCustomerModal') {
+            return redirect()->back();
+        }
 
         return redirect()->route('customer.index');
     }
@@ -65,7 +69,7 @@ class CustomerController extends Controller
     {
         $validtae = $request->validate([
             'name' => ['required', 'max:50'],
-            'email' => [''],
+            'email' => ['nullable', 'unique:customers'],
             'phone_number' => ['required', 'min:11', 'max:11'],
             'address' => ['max:255'],
         ]);
